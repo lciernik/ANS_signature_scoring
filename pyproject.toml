@@ -7,10 +7,13 @@ readme = "README.md"
 packages = [{include = "signaturescoring"}]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8,<3.12"
 numpy = "^1.23.3"
 pandas = "^1.5.0"
 scanpy = "^1.9.1"
+Hydra = "^2.5"
+hydra-core = "^1.2.0"
+scikit-misc = "^0.1.4"
 
 
 [tool.poetry.group.dev.dependencies]
