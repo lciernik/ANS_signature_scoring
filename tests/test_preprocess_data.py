@@ -37,4 +37,3 @@ def test_filter_genes(adata):
     preprocess(adata, 0, 3, target_sum=1e4)
     print(adata.X.shape[1])
     assert adata.X.shape[1] == 19998
-

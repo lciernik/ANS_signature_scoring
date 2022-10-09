@@ -536,6 +536,21 @@ def check_signature_genes(var_names: List[str], gene_list: List[str], return_typ
             if return_type is not of type list or set.
             if gene_list gets empty.
     """
+    # assume that if single string is passed it represents a single gene that should be scored
+    if isinstance(gene_list, str):
+        gene_list = [gene_list]
+
+    if type(gene_list) not in [list, set]:
+        raise ValueError(f"gene_list needs to be either list or set.")
+
+    if len(gene_list) == 0:
+        raise ValueError(f'gene_list must contain at least 1 gene name in adata.var_names')
+
+    if len(gene_list) != len(set(gene_list)):
+        seen = set()
+        duplicates = [x for x in gene_list if x in seen or seen.add(x)]
+        warnings.warn(f'The passed gene_list contains duplicated genes: {duplicates}')
+
     if return_type not in [list, set]:
         raise ValueError(f"return_type needs to be either list or set.")
 
@@ -553,25 +568,33 @@ def check_signature_genes(var_names: List[str], gene_list: List[str], return_typ
     return return_type(gene_list)
 
 
-def get_data_for_gene_pool(adata: AnnData, gene_pool: List[str], gene_list: List[str]):
+def get_data_for_gene_pool(adata: AnnData, gene_pool: List[str], gene_list: List[str], check_gene_list: bool = True):
     """
     The method to filter dataset for gene pool and genes in geen_list.
     Args:
         adata: AnnData object containing the preprocessed (log-normalized) gene expression data.
         gene_pool: List of genes from which the control genes can be selected.
         gene_list: List of genes (signature) scoring methods want to score for.
-
+        check_gene_list: Indicates whether gene list should be checked.
     Returns:
         Eventually, filtered adata subset and new gene_pool.
     """
     var_names = list(adata.var_names)
+    if gene_pool is not None and type(gene_pool) not in [list, set]:
+        raise ValueError(f'gene_pool needs to be a list or set of Gene names (i.e., strings)')
+
+    if gene_pool is not None and len(set(gene_pool).difference(set(var_names))) > 0:
+        warnings.warn(f'Passed gene_pool contains genes not available in adata.var_names. The following genes are '
+                      f'irgnored: {set(gene_pool).difference(set(var_names))}')
     gene_pool = (
         var_names if (gene_pool is None) else [x for x in gene_pool if x in var_names]
     )
+
     if not gene_pool:
         raise ValueError("No valid genes were passed for reference set.")
-    if not isinstance(gene_list, list):
-        raise ValueError(f"gene_list must be of type list")
+
+    if check_gene_list:
+        gene_list = check_signature_genes(var_names, gene_list)
 
     gene_pool = gene_pool + list(set(gene_list) - set(gene_pool))
     # need to include gene_list to

@@ -31,6 +31,7 @@ def score_genes(
         random_state: Optional[int] = None,
         copy: bool = False,
         return_control_genes: bool = False,
+        return_gene_list:bool = False,
         use_raw: Optional[bool] = None,
         verbose: int = 0,
 ) -> Optional[AnnData]:
@@ -64,7 +65,8 @@ def score_genes(
         score_name: Column name for scores added in `.obs` of data.
         random_state: Seed for random state
         copy: Indicates whether original or a copy of `adata` is modified.
-        return_control_genes: Indicated if method returns selected control genes.
+        return_control_genes: Indicates if method returns selected control genes.
+        return_gene_list: Indicates if method returns the possibly reduced gene list.
         use_raw: Whether to compute gene signature score on raw data stored in `.raw` attribute of `adata`
         verbose: If verbose is larger than 0, print statements are shown.
 
@@ -73,12 +75,6 @@ def score_genes(
         is returned.
     """
     start = sc.logging.info(f"computing score {score_name!r}")
-    if verbose > 0:
-        print(f"computing score {score_name!r}")
-
-    # set random seed
-    if random_state is not None:
-        np.random.seed(random_state)
 
     # copy original data if copy=True
     adata = adata.copy() if copy else adata
@@ -91,7 +87,17 @@ def score_genes(
     gene_list = check_signature_genes(var_names, gene_list)
 
     # get data for gene pool
-    _adata_subset, gene_pool = get_data_for_gene_pool(_adata, gene_pool, gene_list)
+    _adata_subset, gene_pool = get_data_for_gene_pool(_adata, gene_pool, gene_list, check_gene_list=False)
+
+    # checks on ctrl_size, i.e., number of control genes
+    if isinstance(ctrl_size, float):
+        ctrl_size = int(np.round(ctrl_size))
+    if not isinstance(ctrl_size, int) or ctrl_size < 1:
+        raise ValueError(f'ctrl_size needs to be a positive integer larger than 0.')
+
+    if (len(gene_pool) - len(gene_list)) < ctrl_size:
+        raise ValueError(f'Not enough genes in gene_pool (len(gene_pool) - len(gene_list) < ctrl_size) to compute '
+                         f'scoring control sets.')
 
     # compute average expression of genes and remove missing data
     if df_mean_var is None:
@@ -147,7 +153,11 @@ def score_genes(
             f"    {len(control_genes) * ctrl_size} total control genes are used."
         ),
     )
-    if return_control_genes:
-        return adata, control_genes if copy else control_genes
+    if return_control_genes and return_gene_list:
+        return (adata, control_genes, gene_list) if copy else (control_genes, gene_list)
+    elif return_control_genes:
+        return (adata, control_genes) if copy else control_genes
+    elif return_gene_list:
+        return (adata, gene_list) if copy else gene_list
     else:
         return adata if copy else None
