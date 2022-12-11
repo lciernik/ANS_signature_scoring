@@ -568,7 +568,8 @@ def check_signature_genes(var_names: List[str], gene_list: List[str], return_typ
     return return_type(gene_list)
 
 
-def get_data_for_gene_pool(adata: AnnData, gene_pool: List[str], gene_list: List[str], check_gene_list: bool = True):
+def get_data_for_gene_pool(adata: AnnData, gene_pool: List[str], gene_list: List[str], ctrl_size: Optional[int] = None,
+                           check_gene_list: bool = True):
     """
     The method to filter dataset for gene pool and genes in geen_list.
     Args:
@@ -595,6 +596,10 @@ def get_data_for_gene_pool(adata: AnnData, gene_pool: List[str], gene_list: List
 
     if check_gene_list:
         gene_list = check_signature_genes(var_names, gene_list)
+
+    if ctrl_size is not None and isinstance(ctrl_size, int) and (len(gene_pool) - len(gene_list)) < ctrl_size:
+        raise ValueError(f'Not enough genes in gene_pool (len(gene_pool) - len(gene_list) < ctrl_size) to compute '
+                         f'scoring control sets. Decrease ctrl_size and/or siganture length and/or gene pool.')
 
     gene_pool = gene_pool + list(set(gene_list) - set(gene_pool))
     # need to include gene_list to
@@ -725,7 +730,6 @@ def get_bins_wrt_avg_gene_expression(gene_means: Any, n_bins: int, verbose: int 
     gene_bins = pd.cut(ranked_gene_means, n_bins, labels=False)
     if verbose > 0:
         print(f"Got {len(np.unique(gene_bins))} bins.")
-
     return gene_bins
 
 

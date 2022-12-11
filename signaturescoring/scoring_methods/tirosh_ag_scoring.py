@@ -11,32 +11,32 @@ from signaturescoring.scoring_methods.compute_signature_score import compute_sig
 from signaturescoring.utils.utils import (
     check_signature_genes,
     get_data_for_gene_pool,
-    get_mean_and_variance_gene_expression
+    get_bins_wrt_avg_gene_expression,
+    get_mean_and_variance_gene_expression,
 )
 
 
 def score_genes(
         adata: AnnData,
         gene_list: List[str],
-        ctrl_size: int = 100,
+        n_bins: int = 25,
         gene_pool: Optional[List[str]] = None,
         df_mean_var: Optional[DataFrame] = None,
-        remove_genes_with_invalid_control_set: bool = True,
         adjust_for_gene_std: bool = False,
         adjust_for_all_genes: bool = False,
         adjust_for_gene_std_var_1p: bool = False,
         adjust_for_gene_std_show_plots: bool = False,
         store_path_mean_var_data: Optional[str] = None,
-        score_name: str = "ANS_score",
+        score_name: str = "AGCGS_score",
         random_state: Optional[int] = None,
         copy: bool = False,
         return_control_genes: bool = False,
-        return_gene_list:bool = False,
+        return_gene_list: bool = False,
         use_raw: Optional[bool] = None,
         verbose: int = 0,
 ) -> Optional[AnnData]:
     """
-    Adjusted neighborhood gene signature scoring method (ANS) scores each cell in the dataset for a passed signature
+    All genes as control genes scoring method (AGCGS) scores each cell in the dataset for a passed signature
     (gene_list) and stores the scores in the data object.
     Implementation is inspired by score_genes method of Scanpy
     (https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes)
@@ -44,13 +44,10 @@ def score_genes(
     Args:
         adata: AnnData object containing the preprocessed (log-normalized) gene expression data.
         gene_list: A list of genes for which the cells are scored for.
-        ctrl_size: The number of control genes selected for each gene in the gene_list.
+        n_bins: The number of average gene expression bins to use.
         gene_pool: The pool of genes out of which control genes can be selected.
         df_mean_var: A pandas DataFrame containing the average expression (and variance) for each gene in the dataset.
-            If df_mean_var is None, the average gene expression and variance is computed during gene signature scoring.
-        remove_genes_with_invalid_control_set: If true, the scoring method removes genes from the gene_list for which
-            no optimal control set can be computed, i.e., if a gene belongs to the ctrl_size/2 genes with the largest
-            average expression.
+            If df_mean_var is None, the average gene expression and variance is computed during gene signature scoring
         adjust_for_gene_std: Apply gene signature scoring with standard deviation adjustment. Divide the difference
             between a signature gene's expression and the mean expression of the control genes by the estimated
             standard deviation of the signature gene.
@@ -65,16 +62,22 @@ def score_genes(
         score_name: Column name for scores added in `.obs` of data.
         random_state: Seed for random state
         copy: Indicates whether original or a copy of `adata` is modified.
-        return_control_genes: Indicates if method returns selected control genes.
+        return_control_genes: Indicated if method returns selected control genes.
         return_gene_list: Indicates if method returns the possibly reduced gene list.
         use_raw: Whether to compute gene signature score on raw data stored in `.raw` attribute of `adata`
         verbose: If verbose is larger than 0, print statements are shown.
 
     Returns:
-        If copy=True, the method returns a copy of the original data with stored ANS scores in `.obs`, otherwise None
+        If copy=True, the method returns a copy of the original data with stored AGCGS scores in `.obs`, otherwise None
         is returned.
     """
     start = sc.logging.info(f"computing score {score_name!r}")
+    if verbose > 0:
+        print(f"computing score {score_name!r}")
+
+    # set random seed
+    if random_state is not None:
+        np.random.seed(random_state)
 
     # copy original data if copy=True
     adata = adata.copy() if copy else adata
@@ -87,19 +90,9 @@ def score_genes(
     gene_list = check_signature_genes(var_names, gene_list)
 
     # get data for gene pool
-    _adata_subset, gene_pool = get_data_for_gene_pool(_adata, gene_pool, gene_list, check_gene_list=False)
+    _adata_subset, gene_pool = get_data_for_gene_pool(_adata, gene_pool, gene_list)
 
-    # checks on ctrl_size, i.e., number of control genes
-    if isinstance(ctrl_size, float):
-        ctrl_size = int(np.round(ctrl_size))
-    if not isinstance(ctrl_size, int) or ctrl_size < 1:
-        raise ValueError(f'ctrl_size needs to be a positive integer larger than 0.')
-
-    if (len(gene_pool) - len(gene_list)) < ctrl_size:
-        raise ValueError(f'Not enough genes in gene_pool (len(gene_pool) - len(gene_list) < ctrl_size) to compute '
-                         f'scoring control sets.')
-
-    # compute average expression of genes and remove missing data
+    # bin according to average gene expression on the gene_pool
     if df_mean_var is None:
         df_mean_var = get_mean_and_variance_gene_expression(_adata_subset,
                                                             estim_var=adjust_for_gene_std,
@@ -109,26 +102,19 @@ def score_genes(
     if len(set(df_mean_var.index).difference(set(gene_pool))) > 0:
         df_mean_var = df_mean_var.loc[gene_pool, :]
 
-    gene_means = df_mean_var['mean'].copy()
+    gene_bins = get_bins_wrt_avg_gene_expression(df_mean_var['mean'], n_bins)
 
-    # remove signature genes belonging to the ctrl_size/2 genes with the highest average expressions
-    if remove_genes_with_invalid_control_set:
-        gene_list = [x for x in gene_list if
-                     (np.where(gene_means.index == x)[0]) < (gene_means.shape[0] - ctrl_size // 2)]
+    # get the bin ids of the genes in gene_list.
+    signature_bins = gene_bins.loc[gene_list]
 
-    # computation of neighboring genes around each signature gene
-    sorted_gene_means = gene_means.sort_values()
-    ref_genes_means = sorted_gene_means[sorted_gene_means.index.isin(gene_list) == False]
-
-    # use sliding window to compute for each window the mean
-    rolled = ref_genes_means.rolling(ctrl_size, closed='right').mean()
-
+    # compute set of control genes
+    nr_control_genes = 0
     control_genes = []
-    for sig_gene in gene_list:
-        curr_sig_avg = sorted_gene_means.loc[sig_gene]
-        min_val_idx = np.argmin(((rolled - curr_sig_avg).abs()))
-        sig_gene_ctrl_genes = rolled.iloc[(min_val_idx - ctrl_size + 1):min_val_idx + 1]
-        control_genes.append(list(sig_gene_ctrl_genes.index))
+    for curr_bin in signature_bins:
+        r_genes = np.array(gene_bins[gene_bins == curr_bin].index)
+        r_genes = list(set(r_genes).difference(set(gene_list)))
+        nr_control_genes += len(r_genes)
+        control_genes.append(r_genes)
 
     if adjust_for_gene_std:
         if adjust_for_gene_std_var_1p:
@@ -150,7 +136,7 @@ def score_genes(
         deep=(
             "added\n"
             f"    {score_name!r}, score of gene set (adata.obs).\n"
-            f"    {len(control_genes) * ctrl_size} total control genes are used."
+            f"    {nr_control_genes} total control genes are used."
         ),
     )
     if return_control_genes and return_gene_list:
