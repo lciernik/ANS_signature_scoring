@@ -140,7 +140,7 @@ class GMMPostprocessor:
                     ax[k, l].set_xlabel(x_label)
                     ax[k, l].set_ylabel(y_label)
                     ax[k, l].set_title(f'corr({x_label}, {y_label})=\n{corr}')
-                #                 if corr[1] < 0.01 and corr[0] > max_corr:
+                # if corr[1] < 0.01 and corr[0] > max_corr:
                 if corr[0] > max_corr:
                     max_corr = corr[0]
                     max_group = group

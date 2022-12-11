@@ -249,7 +249,7 @@ def score_genes(
     #    scores = f_score_method(_adata, gene_list)
     #    warnings.warn(f'Changed sparse format to CSC for performance reasons')
     # else:
-    #    raise ValueError('Unknown sparse matrix format. Allowd are CSR and CSC')
+    #    raise ValueError('Unknown sparse matrix format. Allowed are CSR and CSC')
 
     avg_sig_ranks = (avg_sig_ranks - avg_sig_ranks.min()) / (avg_sig_ranks.max() - avg_sig_ranks.min())
     scores = (scores - scores.min()) / (scores.max() - scores.min())

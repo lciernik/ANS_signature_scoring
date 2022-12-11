@@ -10,6 +10,7 @@ from scanpy._utils import _check_use_raw
 from signaturescoring.scoring_methods.compute_signature_score import compute_signature_score
 from signaturescoring.utils.utils import (
     check_signature_genes,
+    checks_ctrl_size,
     get_data_for_gene_pool,
     get_mean_and_variance_gene_expression
 )
@@ -22,18 +23,12 @@ def score_genes(
         gene_pool: Optional[List[str]] = None,
         df_mean_var: Optional[DataFrame] = None,
         remove_genes_with_invalid_control_set: bool = True,
-        adjust_for_gene_std: bool = False,
-        adjust_for_all_genes: bool = False,
-        adjust_for_gene_std_var_1p: bool = False,
-        adjust_for_gene_std_show_plots: bool = False,
         store_path_mean_var_data: Optional[str] = None,
         score_name: str = "ANS_score",
-        random_state: Optional[int] = None,
         copy: bool = False,
         return_control_genes: bool = False,
         return_gene_list: bool = False,
         use_raw: Optional[bool] = None,
-        verbose: int = 0,
 ) -> Optional[AnnData]:
     """
     Adjusted neighborhood gene signature scoring method (ANS) scores each cell in the dataset for a passed signature
@@ -51,24 +46,13 @@ def score_genes(
         remove_genes_with_invalid_control_set: If true, the scoring method removes genes from the gene_list for which
             no optimal control set can be computed, i.e., if a gene belongs to the ctrl_size/2 genes with the largest
             average expression.
-        adjust_for_gene_std: Apply gene signature scoring with standard deviation adjustment. Divide the difference
-            between a signature gene's expression and the mean expression of the control genes by the estimated
-            standard deviation of the signature gene.
-        adjust_for_all_genes: Apply gene signature scoring with standard deviation adjustment for each occurring gene.
-            Divide each gene's expression (signature and control genes) by estimated standard deviation of the gene.
-        adjust_for_gene_std_var_1p: Apply gene signature scoring with standard deviation adjustment. Divide the
-            difference between a signature gene's expression and the mean expression of the control genes by the
-            estimated standard deviation + 1  of the signature gene.
-        adjust_for_gene_std_show_plots: Indicates whether plots should be shown during average expression computation.
         store_path_mean_var_data: Path to store data and visualizations created during average gene expression
             computation. If it is None, data and visualizations are not stored.
         score_name: Column name for scores added in `.obs` of data.
-        random_state: Seed for random state
         copy: Indicates whether original or a copy of `adata` is modified.
         return_control_genes: Indicates if method returns selected control genes.
         return_gene_list: Indicates if method returns the possibly reduced gene list.
         use_raw: Whether to compute gene signature score on raw data stored in `.raw` attribute of `adata`
-        verbose: If verbose is larger than 0, print statements are shown.
 
     Returns:
         If copy=True, the method returns a copy of the original data with stored ANS scores in `.obs`, otherwise None
@@ -91,20 +75,11 @@ def score_genes(
     _adata_subset, gene_pool = get_data_for_gene_pool(_adata, gene_pool, gene_list, check_gene_list=False)
 
     # checks on ctrl_size, i.e., number of control genes
-    if isinstance(ctrl_size, float):
-        ctrl_size = int(np.round(ctrl_size))
-    if not isinstance(ctrl_size, int) or ctrl_size < 1:
-        raise ValueError(f'ctrl_size needs to be a positive integer larger than 0.')
-
-    if (len(gene_pool) - len(gene_list)) < ctrl_size:
-        raise ValueError(f'Not enough genes in gene_pool (len(gene_pool) - len(gene_list) < ctrl_size) to compute '
-                         f'scoring control sets. Decrease ctrl_size and/or siganture length and/or gene pool.')
+    checks_ctrl_size(ctrl_size, len(gene_pool), len(gene_list))
 
     # compute average expression of genes and remove missing data
     if df_mean_var is None:
         df_mean_var = get_mean_and_variance_gene_expression(_adata_subset,
-                                                            estim_var=adjust_for_gene_std,
-                                                            show_plots=adjust_for_gene_std_show_plots,
                                                             store_path=store_path_mean_var_data,
                                                             store_data_prefix=score_name)
     if len(set(df_mean_var.index).difference(set(gene_pool))) > 0:
@@ -121,13 +96,13 @@ def score_genes(
 
     # remove signature genes belonging to the ctrl_size/2 genes with the highest average expressions
     if remove_genes_with_invalid_control_set:
-
         gene_list = [x for x in gene_list if
                      (np.where(gene_means.index == x)[0]) < (gene_means.shape[0] - ctrl_size // 2)]
         if len(gene_list) == 0:
             raise ValueError(f'All genes were removes as no valid control set could be created for none of the '
                              f'signature genes. Control your signature and control size.')
 
+    # compute for each signature gene its control set
     control_genes = []
     for sig_gene in gene_list:
         curr_sig_avg = sorted_gene_means.loc[sig_gene]
@@ -135,15 +110,8 @@ def score_genes(
         sig_gene_ctrl_genes = rolled.iloc[(min_val_idx - ctrl_size + 1):min_val_idx + 1]
         control_genes.append(list(sig_gene_ctrl_genes.index))
 
-    if adjust_for_gene_std:
-        if adjust_for_gene_std_var_1p:
-            estim_std = df_mean_var['estimate_std_1p']
-        else:
-            estim_std = df_mean_var['estimate_std']
-        score = compute_signature_score(_adata_subset, gene_list, control_genes,
-                                        estim_std, adjust_for_all_genes)
-    else:
-        score = compute_signature_score(_adata_subset, gene_list, control_genes)
+    # compute final scores
+    score = compute_signature_score(_adata_subset, gene_list, control_genes)
 
     adata.obs[score_name] = pd.Series(
         np.array(score).ravel(), index=adata.obs_names, dtype="float64"

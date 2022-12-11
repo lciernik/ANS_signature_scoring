@@ -14,7 +14,7 @@ from signaturescoring.utils.utils import (
     get_data_for_gene_pool,
     get_least_variable_genes_per_bin_v1,
     get_least_variable_genes_per_bin_v2,
-    get_mean_and_variance_gene_expression,
+    get_mean_and_variance_gene_expression, checks_ctrl_size,
 )
 
 
@@ -28,21 +28,15 @@ def score_genes(
         lvg_computation_method: str = "seurat",
         nr_norm_bins: int = 5,
         df_mean_var: Optional[DataFrame] = None,
-        adjust_for_gene_std: bool = False,
-        adjust_for_all_genes: bool = False,
-        adjust_for_gene_std_var_1p: bool = False,
-        adjust_for_gene_std_show_plots: bool = False,
         store_path_mean_var_data: Optional[str] = None,
-        score_name: str = "LVCG_score",
-        random_state: Optional[int] = None,
+        score_name: str = "Tirosh_LV_score",
         copy: bool = False,
         return_control_genes: bool = False,
         return_gene_list: bool = False,
         use_raw: Optional[bool] = None,
-        verbose: int = 0,
 ) -> Optional[AnnData]:
     """
-    Least variable genes as control genes scoring method (LVCGS) scores each cell in the dataset for a passed signature
+    Least variable genes as control genes scoring method (Tirosh_LV) scores each cell in the dataset for a passed signature
     (gene_list) and stores the scores in the data object.
     Implementation is inspired by score_genes method of Scanpy
     (https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes)
@@ -62,39 +56,23 @@ def score_genes(
         nr_norm_bins: If `lvg_computation_version="v2"`, we need to define the number of subbins used.
         df_mean_var: A pandas DataFrame containing the average expression (and variance) for each gene in the dataset.
             If df_mean_var is None, the average gene expression and variance is computed during gene signature scoring.
-        adjust_for_gene_std: Apply gene signature scoring with standard deviation adjustment. Divide the difference
-            between a signature gene's expression and the mean expression of the control genes by the estimated
-            standard deviation of the signature gene.
-        adjust_for_all_genes: Apply gene signature scoring with standard deviation adjustment for each occurring gene.
-            Divide each gene's expression (signature and control genes) by estimated standard deviation of the gene.
-        adjust_for_gene_std_var_1p: Apply gene signature scoring with standard deviation adjustment. Divide the
-            difference between a signature gene's expression and the mean expression of the control genes by the
-            estimated standard deviation + 1  of the signature gene.
-        adjust_for_gene_std_show_plots: Indicates whether plots should be shown during average expression computation.
         store_path_mean_var_data: Path to store data and visualizations created during average gene expression
             computation. If it is None, data and visualizations are not stored.
         score_name: Column name for scores added in `.obs` of data.
-        random_state: Seed for random state
         copy: Indicates whether original or a copy of `adata` is modified.
         return_control_genes: Indicated if method returns selected control genes.
         return_gene_list: Indicates if method returns the possibly reduced gene list.
         use_raw: Whether to compute gene signature score on raw data stored in `.raw` attribute of `adata`
-        verbose: If verbose is larger than 0, print statements are shown.
 
     Returns:
         If copy=True, the method returns a copy of the original data with stored LVCG scores in `.obs`, otherwise None
         is returned.
     """
     start = sc.logging.info(f"computing score {score_name!r}")
-    if verbose > 0:
-        print(f"computing score {score_name!r}")
-
-    # set random seed
-    if random_state is not None:
-        np.random.seed(random_state)
 
     # copy original data if copy=True
     adata = adata.copy() if copy else adata
+
     # work on raw data if desired
     use_raw = _check_use_raw(adata, use_raw)
     _adata = adata.raw if use_raw else adata
@@ -106,17 +84,18 @@ def score_genes(
     # get data for gene pool
     _adata_subset, gene_pool = get_data_for_gene_pool(_adata, gene_pool, gene_list)
 
-    # bin according to average gene expression on the gene_pool
+    # checks on ctrl_size, i.e., number of control genes
+    checks_ctrl_size(ctrl_size, len(gene_pool), len(gene_list))
+
+    # compute average expression of genes and remove missing data
     if df_mean_var is None:
         df_mean_var = get_mean_and_variance_gene_expression(_adata_subset,
-                                                            estim_var=adjust_for_gene_std,
-                                                            show_plots=adjust_for_gene_std_show_plots,
                                                             store_path=store_path_mean_var_data,
                                                             store_data_prefix=score_name)
-
     if len(set(df_mean_var.index).difference(set(gene_pool))) > 0:
         df_mean_var = df_mean_var.loc[gene_pool, :]
 
+    # bin according to average gene expression on the gene_pool
     gene_bins = get_bins_wrt_avg_gene_expression(df_mean_var['mean'], n_bins)
 
     # get for each bin the ctrl_size number of the least variable genes
@@ -148,8 +127,6 @@ def score_genes(
         raise ValueError(
             f"Unknown version {lvg_computation_version} for computation of the least variable genes per bin"
         )
-    if verbose > 0:
-        print(f"least_variable_genes_per_bin {least_variable_genes_per_bin}")
 
     # average expression of all control get all control genes.
     signature_bins = gene_bins.loc[gene_list]
@@ -162,15 +139,8 @@ def score_genes(
         nr_control_genes += len(r_genes)
         control_genes.append(r_genes)
 
-    if adjust_for_gene_std:
-        if adjust_for_gene_std_var_1p:
-            estim_std = df_mean_var['estimate_std_1p']
-        else:
-            estim_std = df_mean_var['estimate_std']
-        score = compute_signature_score(_adata_subset, gene_list, control_genes,
-                                        estim_std, adjust_for_all_genes)
-    else:
-        score = compute_signature_score(_adata_subset, gene_list, control_genes)
+    # compute final scores
+    score = compute_signature_score(_adata_subset, gene_list, control_genes)
 
     adata.obs[score_name] = pd.Series(
         np.array(score).ravel(), index=adata.obs_names, dtype="float64"
