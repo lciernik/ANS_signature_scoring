@@ -1,5 +1,5 @@
 # ANS: Adjusted Neighborhood Scoring to  improve assessment of gene signatures in single-cell RNA-seq data
-A gene expression signature scoring package 
+A gene expression signature scoring Python package.  
 
 This repository accompanies the work: Laure Ciernik, Agnieszka Kraft, Joséphine Yates, Florian Barkmann,and 
 Valentina Boeva, “ANS: Adjusted Neighborhood Scoring to  improve assessment of gene signatures in single-cell RNA-seq data”.
@@ -9,7 +9,7 @@ Valentina Boeva, “ANS: Adjusted Neighborhood Scoring to  improve assessment of
 ## Installation 
 
 ```
-pip install git+ssh://git@github.com:lciernik/ANS_signature_scoring.git
+pip install git+ssh://git@github.com/lciernik/ANS_signature_scoring.git
 ```
 
 #### Method implementation in R 
@@ -21,7 +21,8 @@ method of [the Seurat package](https://satijalab.org/seurat/index.html).
 
 
 ## Getting started
-The package allows full compatibility with the python scRNA-seq anal
+The package allows full compatibility with the python scRNA-seq analysis toolbox [Scanpy](https://scanpy.readthedocs.io/en/stable/index.html).
+The scoring methods are applied on preprocessed (log-normalized) scRNA-seq. 
 ```python
 import signaturescoring as ssc
 
