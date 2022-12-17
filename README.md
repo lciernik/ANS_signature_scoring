@@ -9,7 +9,7 @@ Valentina Boeva, “ANS: Adjusted Neighborhood Scoring to  improve assessment of
 ## Installation 
 
 ```
-pip install git+
+pip install git+ssh://git@github.com:lciernik/ANS_signature_scoring.git
 ```
 
 #### Method implementation in R 
