@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from signaturescoring.scoring_methods.gene_signature_scoring import score_signature
+from signaturescoring import score_signature
 
 
 @pytest.fixture
