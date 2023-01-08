@@ -72,12 +72,12 @@ def score_genes(
     use_raw = _check_use_raw(adata, use_raw)
     _adata = adata.raw if use_raw else adata
 
-    # remove genes from gene_list not available in the data
-    var_names = _adata.var_names.tolist()
-    gene_list = check_signature_genes(var_names, gene_list)
-
     # get data for gene pool
     _adata_subset, gene_pool = get_data_for_gene_pool(_adata, gene_pool, gene_list)
+
+    # remove genes from gene_list not available in the data
+    var_names = _adata_subset.var_names.tolist()
+    gene_list = check_signature_genes(var_names, gene_list)
 
     # checks on ctrl_size, i.e., number of control genes
     checks_ctrl_size(ctrl_size, len(gene_pool), len(gene_list))
