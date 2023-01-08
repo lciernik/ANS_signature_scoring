@@ -97,10 +97,10 @@ def score_genes(
     # remove signature genes belonging to the ctrl_size/2 genes with the highest average expressions
     if remove_genes_with_invalid_control_set:
         gene_list = [x for x in gene_list if
-                     (np.where(gene_means.index == x)[0]) < (gene_means.shape[0] - ctrl_size // 2)]
+                     (np.where(sorted_gene_means.index == x)[0]) < (sorted_gene_means.shape[0] - ctrl_size // 2)]
         if len(gene_list) == 0:
-            raise ValueError(f'All genes were removes as no valid control set could be created for none of the '
-                             f'signature genes. Control your signature and control size.')
+            raise ValueError(f'After removing signature genes for which no valid control was found, no signature '
+                             f'genes are remaining, i.e., empty signature. Control your signature and control size.')
 
     # compute for each signature gene its control set
     control_genes = []
