@@ -108,7 +108,7 @@ def get_bins_wrt_avg_gene_expression(gene_means: Any, n_bins: int, verbose: int 
 def get_data_for_gene_pool(adata: AnnData, gene_pool: List[str], gene_list: List[str], ctrl_size: Optional[int] = None,
                            check_gene_list: bool = True):
     """
-    The method to filter dataset for gene pool and genes in geen_list.
+    The method to filter dataset for gene pool and genes in gene_list.
     Args:
         adata: AnnData object containing the preprocessed (log-normalized) gene expression data.
         gene_pool: List of genes from which the control genes can be selected.
@@ -123,7 +123,7 @@ def get_data_for_gene_pool(adata: AnnData, gene_pool: List[str], gene_list: List
 
     if gene_pool is not None and len(set(gene_pool).difference(set(var_names))) > 0:
         warnings.warn(f'Passed gene_pool contains genes not available in adata.var_names. The following genes are '
-                      f'irgnored: {set(gene_pool).difference(set(var_names))}')
+                      f'ignored: {set(gene_pool).difference(set(var_names))}')
     gene_pool = (
         var_names if (gene_pool is None) else [x for x in gene_pool if x in var_names]
     )
@@ -136,9 +136,10 @@ def get_data_for_gene_pool(adata: AnnData, gene_pool: List[str], gene_list: List
 
     if ctrl_size is not None and isinstance(ctrl_size, int) and (len(gene_pool) - len(gene_list)) < ctrl_size:
         raise ValueError(f'Not enough genes in gene_pool (len(gene_pool) - len(gene_list) < ctrl_size) to compute '
-                         f'scoring control sets. Decrease ctrl_size and/or siganture length and/or gene pool.')
+                         f'scoring control sets. Decrease ctrl_size and/or signature length and/or gene pool.')
 
-    gene_pool = gene_pool + list(set(gene_list) - set(gene_pool))
+    gene_pool = list(set(gene_list).union(set(gene_pool)))
+
     # need to include gene_list to
     if len(gene_pool) < len(var_names):
         return adata[:, gene_pool], gene_pool
