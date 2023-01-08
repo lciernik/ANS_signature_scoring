@@ -70,12 +70,12 @@ def score_genes(
     # get data for gene pool
     _adata_subset, gene_pool = get_data_for_gene_pool(_adata, gene_pool, gene_list)
 
+    # checks on ctrl_size, i.e., number of control genes
+    checks_ctrl_size(ctrl_size, len(gene_pool), len(gene_list))
+
     # remove genes from gene_list not available in the data
     var_names = _adata.var_names.tolist()
     gene_list = check_signature_genes(var_names, gene_list)
-
-    # checks on ctrl_size, i.e., number of control genes
-    checks_ctrl_size(ctrl_size, len(gene_pool), len(gene_list))
 
     # compute average expression of genes
     if df_mean_var is None:
