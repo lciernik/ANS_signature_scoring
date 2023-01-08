@@ -7,9 +7,10 @@ Valentina Boeva, “ANS: Adjusted Neighborhood Scoring to  improve assessment of
 *Note: This repository is in the experimental stage. Changes to the API may appear.*
 
 ## Installation 
+We aim for Python versions 3.8+. Run:
 
 ```
-pip install git+ssh://git@github.com/lciernik/ANS_signature_scoring.git
+pip install git+https://github.com/lciernik/ANS_signature_scoring.git
 ```
 
 #### Method implementation in R 
