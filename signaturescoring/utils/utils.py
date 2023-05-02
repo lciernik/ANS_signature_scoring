@@ -372,7 +372,7 @@ def get_mean_and_variance_gene_expression(adata: AnnData,
             warnings.warn(f'The passed store path {store_path} does not exists. Data won\'t be stored.')
     else:
         store_data = False
-        print('No store_path indicated, thus no data stored.')
+        #print('No store_path indicated, thus no data stored.')
 
     X = adata.X
     df = pd.DataFrame()
