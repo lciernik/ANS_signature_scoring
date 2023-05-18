@@ -96,8 +96,10 @@ def score_genes(
 
     # remove signature genes belonging to the ctrl_size/2 genes with the highest average expressions
     if remove_genes_with_invalid_control_set:
-        gene_list = [x for x in gene_list if
-                     (np.where(sorted_gene_means.index == x)[0]) < (sorted_gene_means.shape[0] - ctrl_size // 2)]
+        not_allowed = set(sorted_gene_means.iloc[-(ctrl_size//2):].index.tolist() + sorted_gene_means.iloc[:(ctrl_size//2)].index.tolist())
+        gene_list = [x for x in gene_list if not (x in not_allowed)]
+        # gene_list = [x for x in gene_list if
+        #              (np.where(sorted_gene_means.index == x)[0]) < (sorted_gene_means.shape[0] - ctrl_size // 2)]
         if len(gene_list) == 0:
             raise ValueError(f'After removing signature genes for which no valid control was found, no signature '
                              f'genes are remaining, i.e., empty signature. Control your signature and control size.')
