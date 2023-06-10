@@ -73,7 +73,7 @@ def compute_ranks_and_ustat(X_data, index, columns, gene_list, X_indices=None, X
     score = res.apply(
         func=(lambda x: u_stat(x, maxRank=maxRank)),
         axis=1,
-        raw=True
+        raw=False
     )
     return score
 
