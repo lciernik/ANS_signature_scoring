@@ -1,3 +1,5 @@
+library(zoo)
+
 # The following function is copied from https://rdrr.io/github/satijalab/seurat/src/R/utilities.R 
 LengthCheck <- function(values, cutoff = 0) {
   return(vapply(
