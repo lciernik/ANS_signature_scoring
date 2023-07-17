@@ -58,7 +58,7 @@ def check_signature_genes(var_names: List[str], gene_list: List[str], return_typ
     gene_list = (set(var_names)).intersection(set(gene_list))
 
     if len(genes_to_ignore) > 0:
-        sc.logging.warning(f"genes are not in var_names and ignored: {genes_to_ignore}")
+        sc.logging.warning(f"genes are not in var_names and ignored: {sorted(list(genes_to_ignore))}")
     if len(gene_list) == 0:
         raise ValueError("No valid genes were passed for scoring.")
 
