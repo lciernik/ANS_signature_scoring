@@ -23,6 +23,8 @@ The repository contains an R implementation of the novel scoring method in the f
 *Disclaimer*: The code is largely based on the implementation of the [`AddModuleScore`](https://satijalab.org/seurat/reference/addmodulescore) 
 method of [the Seurat package](https://satijalab.org/seurat/index.html). 
 
+Note: ANS for R should be used on Seurat objetcts. Source the file in your scripte and use it identically to [`AddModuleScore`](https://satijalab.org/seurat/reference/addmodulescore). 
+
 
 ## Getting started
 The package allows full compatibility with the Python scRNA-seq analysis toolbox [Scanpy](https://scanpy.readthedocs.io/en/stable/index.html).
@@ -44,4 +46,11 @@ Other `method` values:
 - `tirosh_scoring`, `tirosh_ag_scoring`, and `tirosh_lvg_scoring`: Python implementation of the scoring method proposed by [Tirosh et al. 2016](https://doi.org/10.1126/science.aad0501) and two alternatives (this paper). 
 - `jasmine_scoring`: Python implementation of [JASMINE](https://github.com/NNoureen/JASMINE) by [Noureen et al. 2022](https://doi.org/10.7554/eLife.71994). Requires an additional argument `score_method` with the values `likelihood` or `oddsratio`. 
 - `ucell_scoring`: Python implementation of [UCell](https://github.com/carmonalab/UCell) by [Andreatta et Carmona 2021](https://doi.org/10.1016/j.csbj.2021.06.043). 
+
+See tutorials on basic scoring examples,  GMM postprocessing and hard labeling in the `tutorials` folder. 
+
+## Correspondance 
+First: [Laure Ciernik](mailto:laure.ciernik@gmail.com)
+Second: [Prof. Valentina Boeva](mailto:valentina.boeva@inf.ethz.ch)
+
 
