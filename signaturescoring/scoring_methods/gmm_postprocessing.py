@@ -4,6 +4,7 @@ from typing import List, Optional, Union
 import numpy as np
 import pandas as pd
 import scipy
+import scanpy as sc
 from anndata import AnnData
 from matplotlib import pyplot as plt
 from pandas import DataFrame
@@ -82,17 +83,17 @@ class GMMPostprocessor:
         """
         if store_name is None:
             store_name = commonPrefix(score_names, 0, len(score_names) - 1)
-        print(f'GMM model for {store_name} scores.')
+        sc.logging.info(f'GMM model for {store_name} scores.')
         check_score_names(adata, score_names)
         curr_data = adata.obs[score_names].copy()
-        print(f'> standardize data')
+        sc.logging.info(f'> standardize data')
         curr_data = StandardScaler().fit_transform(curr_data)
-        print(f'> fit and predict probabilities')
+        sc.logging.info(f'> fit and predict probabilities')
         gm_pred = self.gmm.fit_predict(curr_data)
         gm_proba = self.gmm.predict_proba(curr_data)
 
         store_name_pred = store_name + '_GMM_pred'
-        store_names_proba = [(store_name + f'_{x}_GMM_proba') for x in range(self.n_components)]
+        store_names_proba = [(store_name + f'{x}_GMM_proba') for x in range(self.n_components)]
 
         if inplace:
             adata.obs[store_name_pred] = gm_pred
@@ -132,7 +133,7 @@ class GMMPostprocessor:
             max_group = None
             for l, group in enumerate(gmm_proba_names):
                 corr = scipy.stats.pearsonr(adata.obs[sco], adata.obs[group])
-                print(corr, sco, group)
+                sc.logging.info(f'{corr}, {sco}, {group}')
                 if plot:
                     ax[k, l].scatter(adata.obs[sco], adata.obs[group])
                     x_label = sco.split('_')[-1]
