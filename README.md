@@ -43,7 +43,7 @@ ssc.score_signature(
 print(adata.obs['scores'].describe())
 ```
 Other `method` values:
-- `tirosh_scoring`, `tirosh_ag_scoring`, and `tirosh_lvg_scoring`: Python implementation of the scoring method proposed by [Tirosh et al. 2016](https://doi.org/10.1126/science.aad0501) and two alternatives (this paper). 
+- `seurat_scoring`, `seurat_ag_scoring`, and `seurat_lvg_scoring`: Python implementation of the scoring method [`AddModuleScore`](https://satijalab.org/seurat/reference/addmodulescore) of the package [`Seurat`](https://satijalab.org/seurat/) first proposed by [Tirosh et al. 2016](https://doi.org/10.1126/science.aad0501) and two alternatives (this paper). 
 - `jasmine_scoring`: Python implementation of [JASMINE](https://github.com/NNoureen/JASMINE) by [Noureen et al. 2022](https://doi.org/10.7554/eLife.71994). Requires an additional argument `score_method` with the values `likelihood` or `oddsratio`. 
 - `ucell_scoring`: Python implementation of [UCell](https://github.com/carmonalab/UCell) by [Andreatta et Carmona 2021](https://doi.org/10.1016/j.csbj.2021.06.043). 
 

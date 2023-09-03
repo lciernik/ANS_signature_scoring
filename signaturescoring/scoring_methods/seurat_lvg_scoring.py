@@ -29,14 +29,14 @@ def score_genes(
         nr_norm_bins: int = 5,
         df_mean_var: Optional[DataFrame] = None,
         store_path_mean_var_data: Optional[str] = None,
-        score_name: str = "Tirosh_LVG_score",
+        score_name: str = "Seurat_LVG_score",
         copy: bool = False,
         return_control_genes: bool = False,
         return_gene_list: bool = False,
         use_raw: Optional[bool] = None,
 ) -> Optional[AnnData]:
     """
-    Least variable genes as control genes scoring method (Tirosh_LVG) scores each cell in the dataset for a passed signature
+    Least variable genes as control genes scoring method (Seurat_LVG) scores each cell in the dataset for a passed signature
     (gene_list) and stores the scores in the data object.
     Implementation is inspired by score_genes method of Scanpy
     (https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes)
