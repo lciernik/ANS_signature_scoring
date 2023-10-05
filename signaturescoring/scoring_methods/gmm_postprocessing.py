@@ -17,6 +17,7 @@ from signaturescoring.utils.utils import commonPrefix
 def check_score_names(adata: AnnData, score_names: List[str]):
     """
     Asserts that names associated with score columns exist in the data.
+
     Args:
         adata: AnnData object containing the gene expression data.
         score_names: Names of score columns
@@ -40,21 +41,18 @@ class GMMPostprocessor:
     If fits a Gaussian Mixture Model on gene signature scores and assigns clusters to signatures.
 
     Attributes:
-        n_components: Defines the number of clusters we expect in the Gaussian Mixture Model. For postprocessing gene
-            expression signatures we use n_components=#signatures or n_components=(#signatures+1).
+        n_components: Defines the number of clusters we expect in the Gaussian Mixture Model. For postprocessing gene expression signatures we use n_components=#signatures or n_components=(#signatures+1).
         gmm: Corresponds to the GMM used for postprocessing.
+
+    Args:
+        n_components: Number of clusters we expect in the Gaussian Mixture Model.
+        covariance_type: The type of covariance used in GMM. Available methods 'full', 'tied', 'diag', 'spherical'.
+        init_params: Method to initialize parameters in GMM. Available methods 'kmeans', 'k-means++', 'random', 'random_from_data'
+        n_init: Number of initializations done.
     """
 
     def __init__(self, n_components: int = 3, covariance_type: str = 'full', init_params: str = 'k-means++',
                  n_init: int = 30):
-        """
-        Args:
-            n_components: Number of clusters we expect in the Gaussian Mixture Model.
-            covariance_type: The type of covariance used in GMM. Available methods 'full', 'tied', 'diag', 'spherical'.
-            init_params: Method to initialize parameters in GMM. Available methods 'kmeans', 'k-means++', 'random',
-                'random_from_data'
-            n_init: Number of initializations done.
-        """
         self.n_components = n_components
         self.covariance_type = covariance_type
         self.init_params = init_params
@@ -70,6 +68,7 @@ class GMMPostprocessor:
                         inplace: bool = True) -> Union[str, List[str], Optional[DataFrame]]:
         """
         The method fits previously initialized GMM on signature scores.
+
         Args:
             adata: AnnData object containing the gene expression data.
             score_names: Name of signature scores columns on which the GMM is fit.
@@ -78,8 +77,7 @@ class GMMPostprocessor:
 
         Returns:
             If 'inplace=True', the names of the new columns are returned.
-            If 'inplace=False', the names of the new columns and the DataFrame containing the cluster probabilities are
-                returned.
+            If 'inplace=False', the names of the new columns and the DataFrame containing the cluster probabilities are returned.
         """
         if store_name is None:
             store_name = commonPrefix(score_names, 0, len(score_names) - 1)

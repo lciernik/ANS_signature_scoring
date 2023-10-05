@@ -15,6 +15,7 @@ from signaturescoring.utils.utils import check_signature_genes
 def rank_calculation(cell_data, genes):
     """
     Compute the ranks of the gene expressions for a cell
+
     Args:
         cell_data: gene expression data for a given cell
         genes: signature genes
@@ -35,6 +36,7 @@ def rank_calculation(cell_data, genes):
 def compute_avg_ranks_sig_subset(X_data, index, columns, gene_list, X_indices=None, X_indptr=None, X_shape=None):
     """
     Compute the average ranks for a given signature for each cell.
+
     Args:
         X_data: Gene expression data.
         index: Index of cells.
@@ -42,8 +44,7 @@ def compute_avg_ranks_sig_subset(X_data, index, columns, gene_list, X_indices=No
         gene_list: Signature genes.
         X_indices: For sparse matrix reconstruction indices. If None, method assumes `X_data` to be a dense matrix.
         X_indptr: For sparse matrix reconstruction index pointers. If None, method assumes `X_data` to be a dense matrix.
-        X_shape: For sparse matrix reconstruction shape of original matrix. If None, method assumes `X_data` to be a
-            dense matrix.
+        X_shape: For sparse matrix reconstruction shape of original matrix. If None, method assumes `X_data` to be a dense matrix.
 
     Returns:
         For each cell in X_data the method returns the average ranks.
@@ -62,8 +63,9 @@ def compute_avg_ranks_sig_subset(X_data, index, columns, gene_list, X_indices=No
 
 def compute_avg_ranks_signature(adata, sparse_X, gene_list, bs, joblib_kwargs):
     """
-    Create groups of managable sizes. For each group compute for each cell the ranks of the genes and select the
+    Create groups of manageable sizes. For each group compute for each cell the ranks of the genes and select the
     ranks that belong to the signature genes
+
     Args:
         adata: AnnData object with gene expression data.
         sparse_X: Indicates if data is sparse.
@@ -74,7 +76,7 @@ def compute_avg_ranks_signature(adata, sparse_X, gene_list, bs, joblib_kwargs):
     Returns:
         For each cell in adata the method returns the average ranks
     """
-    # create groups of managable sizes
+    # create groups of manageable sizes
     bss = pd.cut(np.arange(adata.obs.shape[0]), (adata.obs.shape[0] // bs + 1), labels=False)
 
     num_cores = multiprocessing.cpu_count()
@@ -95,6 +97,7 @@ def compute_avg_ranks_signature(adata, sparse_X, gene_list, bs, joblib_kwargs):
 def preparation(adata, genes):
     """
     Preparation for the computation of the expression value in JASMINE scoring.
+
     Args:
         adata: AnnData object with gene expression data.
         genes: Signature genes.
@@ -132,6 +135,7 @@ def preparation(adata, genes):
 def or_calculation(adata, genes):
     """
     Computation of enrichment value based on the Odds Ratio of the values returned in preparation
+
     Args:
         adata: AnnData object with gene expression data
         genes: Signature genes
@@ -149,6 +153,7 @@ def or_calculation(adata, genes):
 def likelihood_calculation(adata, genes):
     """
     Computation of enrichment value based on the Likelihood of the values returned in preparation
+
     Args:
         adata: AnnData object with gene expression data
         genes: Signature genes

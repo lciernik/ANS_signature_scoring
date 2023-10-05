@@ -23,11 +23,9 @@ def compute_signature_score(adata: AnnData,
     Args:
         adata: AnnData object containing the preprocessed (log-normalized) gene expression data.
         sig_genes: A list of genes for which the cells are scored for.
-        ctrl_genes: A list of control gene lists. The length of the outer list must correspond to the length of the
-            sig_genes
+        ctrl_genes: A list of control gene lists. The length of the outer list must correspond to the length of the sig_genes
         max_block: Maximum number of cell before changing to parallel score computation for grouped cells.
-        max_nr_ctrl: Maximum number of total control gene number before changing to parallel score computation for
-            grouped cells.
+        max_nr_ctrl: Maximum number of total control gene number before changing to parallel score computation for grouped cells.
 
     Returns:
         Returns vector of scores for each cell.

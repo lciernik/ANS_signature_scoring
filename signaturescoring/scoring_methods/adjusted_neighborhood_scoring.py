@@ -32,8 +32,7 @@ def score_genes(
 ) -> Optional[AnnData]:
     """
     Adjusted neighborhood gene signature scoring method (ANS) scores each cell in the dataset for a passed signature
-    (gene_list) and stores the scores in the data object.
-    Implementation is inspired by score_genes method of Scanpy
+    (gene_list) and stores the scores in the data object. Implementation is inspired by score_genes method of Scanpy
     (https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes)
 
     Args:

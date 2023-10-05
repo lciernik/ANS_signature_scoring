@@ -16,6 +16,7 @@ from signaturescoring.utils.utils import check_signature_genes
 def u_stat(rank_value, maxRank=1500):
     """
     The method computes the U statistic on signature gene ranks.
+
     Args:
         rank_value: Ranks of the signature genes.
         maxRank: Cutoff for maximum rank allowed.
@@ -39,6 +40,7 @@ def compute_ranks_and_ustat(X_data, index, columns, gene_list, X_indices=None, X
                             maxRank=1500):
     """
     The following method computes for each cell in `X_data` the UCell score.
+
     Args:
         X_data: Current batch of gene expression data.
         index: Index of cells.

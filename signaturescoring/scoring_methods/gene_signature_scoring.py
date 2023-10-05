@@ -45,17 +45,15 @@ def score_signature(adata: AnnData,
     Notes:
         ANS: Adujsted neighborhood signature scoring method.
             (see signaturescoring.scoring_methods.adjusted_neighborhood_scoring.score_genes)
-        Seurat: Scoring method based on approach suggested by Tirosh et al. 2016 (10.1126/science.aad0501).
-            (see signaturescoring.scoring_methods.seurat_scoring.score_genes)
-        Seurat_AG, Seurat_LVG: Modifications of above method. First selecting all genes in an expression bin as control
-                             genes. Latter selecting the least variable genes of an expression bin as control genes.
-                             (see signaturescoring.scoring_methods.seurat_[ag/lvg]_scoring.score_genes)
+            10.1126/science.aad0501, (see signaturescoring.scoring_methods.seurat_scoring.score_genes)
+        Seurat_AG, Seurat_LVG: Modifications of above method. First selecting all genes in an expression bin as control genes. Latter selecting the least variable genes of an expression bin as control genes.
+            (see signaturescoring.scoring_methods.seurat_[ag/lvg]_scoring.score_genes)
         Scanpy: Scoring method implemented in Scanpy
-                (https://scanpy.readthedocs.io/en/stable/generated/scanpy.tl.score_genes.html)
-        Jasmine: Rank-based signature scoring method by Noureen et al. 2022 (https://doi.org/10.7554/eLife.71994)
-                (see signaturescoring.scoring_methods.jasmine_scoring.score_genes)
-        UCell: Rank-based signature scoring method by Andretta et al. 2021 (https://doi.org/10.1016/j.csbj.2021.06.043)
-                (see signaturescoring.scoring_methods.ucell_scoring.score_genes)
+             https://scanpy.readthedocs.io/en/stable/generated/scanpy.tl.score_genes.html
+        Jasmine: Rank-based signature scoring method by Noureen et al. 2022
+             https://doi.org/10.7554/eLife.71994, (see signaturescoring.scoring_methods.jasmine_scoring.score_genes)
+        UCell: Rank-based signature scoring method by Andretta et al. 2021
+             https://doi.org/10.1016/j.csbj.2021.06.043, (see signaturescoring.scoring_methods.ucell_scoring.score_genes)
     """
     if method == "adjusted_neighborhood_scoring":
         return adjusted_neighborhood_scoring(adata, gene_list, **kwarg)
