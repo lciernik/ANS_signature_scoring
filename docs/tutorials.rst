@@ -1,7 +1,10 @@
 .. _tutorials:
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+.. nbgallery::
+    :caption: Tutorials
+    :name: rst-gallery
+    :glob:
+    :reversed:
 
-   tutorials/basic_scoring.ipynb
+    tutorials/basic_scoring.ipynb
+    tutorials/gmm_postprocessing_and_hard_labeling.ipynb

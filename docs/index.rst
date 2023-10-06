@@ -16,6 +16,7 @@ Navigation
    :maxdepth: 2
    :caption: Contents:
 
+   tutorials
    api
 
 
