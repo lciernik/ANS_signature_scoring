@@ -1,0 +1,1118 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>signaturescoring.scoring_methods package &#8212; ANS  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ccbe24c1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/signaturescoring.scoring_methods';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">ANS  documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../tutorials.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lciernik/ANS_signature_scoring" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../tutorials.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lciernik/ANS_signature_scoring" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">signaturescoring.scoring_methods package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signaturescoring.utils.html">signaturescoring.utils package</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">signaturesco...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="signaturescoring-scoring-methods-package">
+<h1>signaturescoring.scoring_methods package<a class="headerlink" href="#signaturescoring-scoring-methods-package" title="Permalink to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="module-signaturescoring.scoring_methods.adjusted_neighborhood_scoring">
+<span id="signaturescoring-scoring-methods-adjusted-neighborhood-scoring-module"></span><h2>signaturescoring.scoring_methods.adjusted_neighborhood_scoring module<a class="headerlink" href="#module-signaturescoring.scoring_methods.adjusted_neighborhood_scoring" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.adjusted_neighborhood_scoring.score_genes">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.adjusted_neighborhood_scoring.</span></span><span class="sig-name descname"><span class="pre">score_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_pool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_mean_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_genes_with_invalid_control_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_path_mean_var_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ANS_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_control_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#signaturescoring.scoring_methods.adjusted_neighborhood_scoring.score_genes" title="Permalink to this definition">#</a></dt>
+<dd><p>Adjusted neighborhood gene signature scoring method (ANS) scores each cell in the dataset for a passed signature
+(gene_list) and stores the scores in the data object. Implementation is inspired by score_genes method of Scanpy
+(<a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes">https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes</a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the preprocessed (log-normalized) gene expression data.</p></li>
+<li><p><strong>gene_list</strong> – A list of genes for which the cells are scored for.</p></li>
+<li><p><strong>ctrl_size</strong> – The number of control genes selected for each gene in the gene_list.</p></li>
+<li><p><strong>gene_pool</strong> – The pool of genes out of which control genes can be selected.</p></li>
+<li><p><strong>df_mean_var</strong> – A pandas DataFrame containing the average expression (and variance) for each gene in the dataset.
+If df_mean_var is None, the average gene expression and variance is computed during gene signature scoring.</p></li>
+<li><p><strong>remove_genes_with_invalid_control_set</strong> – If true, the scoring method removes genes from the gene_list for which
+no optimal control set can be computed, i.e., if a gene belongs to the ctrl_size/2 genes with the largest
+average expression.</p></li>
+<li><p><strong>store_path_mean_var_data</strong> – Path to store data and visualizations created during average gene expression
+computation. If it is None, data and visualizations are not stored.</p></li>
+<li><p><strong>score_name</strong> – Column name for scores added in <cite>.obs</cite> of data.</p></li>
+<li><p><strong>copy</strong> – Indicates whether original or a copy of <cite>adata</cite> is modified.</p></li>
+<li><p><strong>return_control_genes</strong> – Indicates if method returns selected control genes.</p></li>
+<li><p><strong>return_gene_list</strong> – Indicates if method returns the possibly reduced gene list.</p></li>
+<li><p><strong>use_raw</strong> – Whether to compute gene signature score on raw data stored in <cite>.raw</cite> attribute of <cite>adata</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If copy=True, the method returns a copy of the original data with stored ANS scores in <cite>.obs</cite>, otherwise None
+is returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-signaturescoring.scoring_methods.compute_signature_score">
+<span id="signaturescoring-scoring-methods-compute-signature-score-module"></span><h2>signaturescoring.scoring_methods.compute_signature_score module<a class="headerlink" href="#module-signaturescoring.scoring_methods.compute_signature_score" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.compute_signature_score.compute_signature_score">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.compute_signature_score.</span></span><span class="sig-name descname"><span class="pre">compute_signature_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_nr_ctrl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signaturescoring.scoring_methods.compute_signature_score.compute_signature_score" title="Permalink to this definition">#</a></dt>
+<dd><p>The method computes for all Tirosh-based scoring methods the cell scores given the signature genes and the control
+gene sets for each signature gene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the preprocessed (log-normalized) gene expression data.</p></li>
+<li><p><strong>sig_genes</strong> – A list of genes for which the cells are scored for.</p></li>
+<li><p><strong>ctrl_genes</strong> – A list of control gene lists. The length of the outer list must correspond to the length of the sig_genes</p></li>
+<li><p><strong>max_block</strong> – Maximum number of cell before changing to parallel score computation for grouped cells.</p></li>
+<li><p><strong>max_nr_ctrl</strong> – Maximum number of total control gene number before changing to parallel score computation for grouped cells.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns vector of scores for each cell.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-signaturescoring.scoring_methods.corrected_scanpy_scoring">
+<span id="signaturescoring-scoring-methods-corrected-scanpy-scoring-module"></span><h2>signaturescoring.scoring_methods.corrected_scanpy_scoring module<a class="headerlink" href="#module-signaturescoring.scoring_methods.corrected_scanpy_scoring" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.corrected_scanpy_scoring.score_genes">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.corrected_scanpy_scoring.</span></span><span class="sig-name descname"><span class="pre">score_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_pool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'corrected_scanpy_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">RandomState</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#signaturescoring.scoring_methods.corrected_scanpy_scoring.score_genes" title="Permalink to this definition">#</a></dt>
+<dd><p>The following scoring method is very similar to Scanpy’s scoring method
+(<a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html">https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html</a>, inkl. code). Scanpy’s scoring method
+does not allow sampling from an expression bin more than once, even if more than one signature gene land into the same
+expression bin. This behaviour is corrected in the following scoring method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the preprocessed (log-normalized) gene expression data.</p></li>
+<li><p><strong>gene_list</strong> – A list of genes for which the cells are scored for.</p></li>
+<li><p><strong>ctrl_size</strong> – The number of control genes selected for each gene in the gene_list.</p></li>
+<li><p><strong>gene_pool</strong> – The pool of genes out of which control genes can be selected.</p></li>
+<li><p><strong>n_bins</strong> – The number of average gene expression bins to use.</p></li>
+<li><p><strong>score_name</strong> – Column name for scores added in <cite>.obs</cite> of data.</p></li>
+<li><p><strong>random_state</strong> – Seed for random state</p></li>
+<li><p><strong>copy</strong> – Indicates whether original or a copy of <cite>adata</cite> is modified.</p></li>
+<li><p><strong>use_raw</strong> – Whether to compute gene signature score on raw data stored in <cite>.raw</cite> attribute of <cite>adata</cite></p></li>
+<li><p><strong>verbose</strong> – If verbose is larger than 0, print statements are shown.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If copy=True, the method returns a copy of the original data with stored ANS scores in <cite>.obs</cite>, otherwise None
+is returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-signaturescoring.scoring_methods.gene_signature_scoring">
+<span id="signaturescoring-scoring-methods-gene-signature-scoring-module"></span><h2>signaturescoring.scoring_methods.gene_signature_scoring module<a class="headerlink" href="#module-signaturescoring.scoring_methods.gene_signature_scoring" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.gene_signature_scoring.score_signature">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.gene_signature_scoring.</span></span><span class="sig-name descname"><span class="pre">score_signature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'adjusted_neighborhood_scoring'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwarg</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#signaturescoring.scoring_methods.gene_signature_scoring.score_signature" title="Permalink to this definition">#</a></dt>
+<dd><p>Wrapper method to call one of the available gene expression signature scoring methods (ANS, Seurat, Seurat_AG,
+Seurat_LVG, Scanpy, Jasmine, UCell).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the gene expression data.</p></li>
+<li><p><strong>gene_list</strong> – A list of genes,i.e., gene expression signature, for which the cells are scored for.</p></li>
+<li><p><strong>method</strong> – Scoring method to use. One of [‘adjusted_neighborhood_scoring’, ‘seurat_scoring’, ‘seurat_ag_scoring’,
+‘seurat_lvg_scoring’, ‘scanpy_scoring’, ‘jasmine_scoring’, ‘ucell_scoring’, ‘neighborhood_scoring’,
+‘corrected_scanpy_scoring’]</p></li>
+<li><p><strong>**kwarg</strong> – Other keyword arguments specific for the scoring method. See below names of individual scoring methods
+and their available keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If copy=True, the method returns a copy of the original data with stored ANS scores in <cite>.obs</cite>, otherwise None
+is returned.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<dl class="simple">
+<dt>ANS: Adujsted neighborhood signature scoring method.</dt><dd><p>(see signaturescoring.scoring_methods.adjusted_neighborhood_scoring.score_genes)
+10.1126/science.aad0501, (see signaturescoring.scoring_methods.seurat_scoring.score_genes)</p>
+</dd>
+<dt>Seurat_AG, Seurat_LVG: Modifications of above method. First selecting all genes in an expression bin as control genes. Latter selecting the least variable genes of an expression bin as control genes.</dt><dd><p>(see signaturescoring.scoring_methods.seurat_[ag/lvg]_scoring.score_genes)</p>
+</dd>
+<dt>Scanpy: Scoring method implemented in Scanpy</dt><dd><p><a class="reference external" href="https://scanpy.readthedocs.io/en/stable/generated/scanpy.tl.score_genes.html">https://scanpy.readthedocs.io/en/stable/generated/scanpy.tl.score_genes.html</a></p>
+</dd>
+<dt>Jasmine: Rank-based signature scoring method by Noureen et al. 2022</dt><dd><p><a class="reference external" href="https://doi.org/10.7554/eLife.71994">https://doi.org/10.7554/eLife.71994</a>, (see signaturescoring.scoring_methods.jasmine_scoring.score_genes)</p>
+</dd>
+<dt>UCell: Rank-based signature scoring method by Andretta et al. 2021</dt><dd><p><a class="reference external" href="https://doi.org/10.1016/j.csbj.2021.06.043">https://doi.org/10.1016/j.csbj.2021.06.043</a>, (see signaturescoring.scoring_methods.ucell_scoring.score_genes)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-signaturescoring.scoring_methods.gmm_postprocessing">
+<span id="signaturescoring-scoring-methods-gmm-postprocessing-module"></span><h2>signaturescoring.scoring_methods.gmm_postprocessing module<a class="headerlink" href="#module-signaturescoring.scoring_methods.gmm_postprocessing" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.gmm_postprocessing.GMMPostprocessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.gmm_postprocessing.</span></span><span class="sig-name descname"><span class="pre">GMMPostprocessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">covariance_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'full'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'k-means++'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_init</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signaturescoring.scoring_methods.gmm_postprocessing.GMMPostprocessor" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The GMMPostprocessor class is used to correct for incomparable score ranges in gene signature scoring.
+If fits a Gaussian Mixture Model on gene signature scores and assigns clusters to signatures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_components</strong> – Defines the number of clusters we expect in the Gaussian Mixture Model. For postprocessing gene expression signatures we use n_components=#signatures or n_components=(#signatures+1).</p></li>
+<li><p><strong>gmm</strong> – Corresponds to the GMM used for postprocessing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>n_components</strong> – Number of clusters we expect in the Gaussian Mixture Model.</p></li>
+<li><p><strong>covariance_type</strong> – The type of covariance used in GMM. Available methods ‘full’, ‘tied’, ‘diag’, ‘spherical’.</p></li>
+<li><p><strong>init_params</strong> – Method to initialize parameters in GMM. Available methods ‘kmeans’, ‘k-means++’, ‘random’, ‘random_from_data’</p></li>
+<li><p><strong>n_init</strong> – Number of initializations done.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.gmm_postprocessing.GMMPostprocessor.assign_clusters_to_signatures">
+<span class="sig-name descname"><span class="pre">assign_clusters_to_signatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gmm_proba_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_plot_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#signaturescoring.scoring_methods.gmm_postprocessing.GMMPostprocessor.assign_clusters_to_signatures" title="Permalink to this definition">#</a></dt>
+<dd><p>The methods computed the assignments of GMM clusters to gene expression signatures by computing the correlation
+of each cluster probabilities to the signatures’ scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the gene expression data.</p></li>
+<li><p><strong>score_names</strong> – Name of signature scores columns.</p></li>
+<li><p><strong>gmm_proba_names</strong> – Name of GMM cluster probability columns.</p></li>
+<li><p><strong>plot</strong> – Plot scatterplots of scores and probabilities for each signature and GMM cluster.</p></li>
+<li><p><strong>store_plot_path</strong> – Path to location where scatterplots should be stored. If None, plots are not stored.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The assignments of each signature to a cluster from GMM postprocessing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.gmm_postprocessing.GMMPostprocessor.fit_and_predict">
+<span class="sig-name descname"><span class="pre">fit_and_predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#signaturescoring.scoring_methods.gmm_postprocessing.GMMPostprocessor.fit_and_predict" title="Permalink to this definition">#</a></dt>
+<dd><p>The method fits previously initialized GMM on signature scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the gene expression data.</p></li>
+<li><p><strong>score_names</strong> – Name of signature scores columns on which the GMM is fit.</p></li>
+<li><p><strong>store_name</strong> – Prefix of new columns with probabilities</p></li>
+<li><p><strong>inplace</strong> – If probabilities are stored in <cite>adata</cite> or in a new pandas DataFrame</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If ‘inplace=True’, the names of the new columns are returned.
+If ‘inplace=False’, the names of the new columns and the DataFrame containing the cluster probabilities are returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.gmm_postprocessing.check_score_names">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.gmm_postprocessing.</span></span><span class="sig-name descname"><span class="pre">check_score_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signaturescoring.scoring_methods.gmm_postprocessing.check_score_names" title="Permalink to this definition">#</a></dt>
+<dd><p>Asserts that names associated with score columns exist in the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the gene expression data.</p></li>
+<li><p><strong>score_names</strong> – Names of score columns</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Assertion error if any value in score_names is not contained in adata</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-signaturescoring.scoring_methods.jasmine_scoring">
+<span id="signaturescoring-scoring-methods-jasmine-scoring-module"></span><h2>signaturescoring.scoring_methods.jasmine_scoring module<a class="headerlink" href="#module-signaturescoring.scoring_methods.jasmine_scoring" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.jasmine_scoring.compute_avg_ranks_sig_subset">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.jasmine_scoring.</span></span><span class="sig-name descname"><span class="pre">compute_avg_ranks_sig_subset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_indptr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signaturescoring.scoring_methods.jasmine_scoring.compute_avg_ranks_sig_subset" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the average ranks for a given signature for each cell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_data</strong> – Gene expression data.</p></li>
+<li><p><strong>index</strong> – Index of cells.</p></li>
+<li><p><strong>columns</strong> – Names of genes.</p></li>
+<li><p><strong>gene_list</strong> – Signature genes.</p></li>
+<li><p><strong>X_indices</strong> – For sparse matrix reconstruction indices. If None, method assumes <cite>X_data</cite> to be a dense matrix.</p></li>
+<li><p><strong>X_indptr</strong> – For sparse matrix reconstruction index pointers. If None, method assumes <cite>X_data</cite> to be a dense matrix.</p></li>
+<li><p><strong>X_shape</strong> – For sparse matrix reconstruction shape of original matrix. If None, method assumes <cite>X_data</cite> to be a dense matrix.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>For each cell in X_data the method returns the average ranks.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.jasmine_scoring.compute_avg_ranks_signature">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.jasmine_scoring.</span></span><span class="sig-name descname"><span class="pre">compute_avg_ranks_signature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparse_X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joblib_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signaturescoring.scoring_methods.jasmine_scoring.compute_avg_ranks_signature" title="Permalink to this definition">#</a></dt>
+<dd><p>Create groups of manageable sizes. For each group compute for each cell the ranks of the genes and select the
+ranks that belong to the signature genes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object with gene expression data.</p></li>
+<li><p><strong>sparse_X</strong> – Indicates if data is sparse.</p></li>
+<li><p><strong>gene_list</strong> – Signature genes.</p></li>
+<li><p><strong>bs</strong> – The number of bins.</p></li>
+<li><p><strong>joblib_kwargs</strong> – Keyword argument for parallel execution with joblib.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>For each cell in adata the method returns the average ranks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.jasmine_scoring.likelihood_calculation">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.jasmine_scoring.</span></span><span class="sig-name descname"><span class="pre">likelihood_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signaturescoring.scoring_methods.jasmine_scoring.likelihood_calculation" title="Permalink to this definition">#</a></dt>
+<dd><p>Computation of enrichment value based on the Likelihood of the values returned in preparation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object with gene expression data</p></li>
+<li><p><strong>genes</strong> – Signature genes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Enrichment score based on Likelihood</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.jasmine_scoring.or_calculation">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.jasmine_scoring.</span></span><span class="sig-name descname"><span class="pre">or_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signaturescoring.scoring_methods.jasmine_scoring.or_calculation" title="Permalink to this definition">#</a></dt>
+<dd><p>Computation of enrichment value based on the Odds Ratio of the values returned in preparation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object with gene expression data</p></li>
+<li><p><strong>genes</strong> – Signature genes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Enrichment score based on Odds Ratio</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.jasmine_scoring.preparation">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.jasmine_scoring.</span></span><span class="sig-name descname"><span class="pre">preparation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signaturescoring.scoring_methods.jasmine_scoring.preparation" title="Permalink to this definition">#</a></dt>
+<dd><p>Preparation for the computation of the expression value in JASMINE scoring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object with gene expression data.</p></li>
+<li><p><strong>genes</strong> – Signature genes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The method returns the number of signature genes expressed, signature genes not expressed, non-signature genes
+expressed, and non-signature genes not expressed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.jasmine_scoring.rank_calculation">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.jasmine_scoring.</span></span><span class="sig-name descname"><span class="pre">rank_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signaturescoring.scoring_methods.jasmine_scoring.rank_calculation" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the ranks of the gene expressions for a cell</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_data</strong> – gene expression data for a given cell</p></li>
+<li><p><strong>genes</strong> – signature genes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>average rank of signature genes for a given cell</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.jasmine_scoring.score_genes">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.jasmine_scoring.</span></span><span class="sig-name descname"><span class="pre">score_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'likelihood'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'JASMINE_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joblib_kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'n_jobs':</span> <span class="pre">4}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#signaturescoring.scoring_methods.jasmine_scoring.score_genes" title="Permalink to this definition">#</a></dt>
+<dd><p>JASMINE signature scoring method is a Python implementation of the scoring method proposed by Noureen et al. 2022.</p>
+<p>Nighat Noureen, Zhenqing Ye, Yidong Chen, Xiaojing Wang, and Siyuan Zheng.
+„Signature-scoring methods developed for bulk samples are not adequate for cancer
+single-cell RNA sequencing data“. In: Elife 11 (Feb. 2022), e71994 (cit. on pp. iii, 2,
+9, 15–17).</p>
+<p>Implementation is inspired by score_genes method of Scanpy
+(<a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes">https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes</a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the gene expression data.</p></li>
+<li><p><strong>gene_list</strong> – A list of genes (signature) for which the cells are scored for.</p></li>
+<li><p><strong>score_method</strong> – The method describes, which submethod of enrichment value computation should be used (‘oddsratio’,
+‘likelihood’).</p></li>
+<li><p><strong>bs</strong> – The number of cells in a processing batch.</p></li>
+<li><p><strong>score_name</strong> – Column name for scores added in <cite>.obs</cite> of data.</p></li>
+<li><p><strong>random_state</strong> – Seed for random state.</p></li>
+<li><p><strong>copy</strong> – Indicates whether original or a copy of <cite>adata</cite> is modified.</p></li>
+<li><p><strong>use_raw</strong> – Whether to compute gene signature score on raw data stored in <cite>.raw</cite> attribute of <cite>adata</cite></p></li>
+<li><p><strong>verbose</strong> – If verbose is larger than 0, print statements are shown.</p></li>
+<li><p><strong>joblib_kwargs</strong> – Keyword argument for parallel execution with joblib.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If copy=True, the method returns a copy of the original data with stored JASMINE scores in <cite>.obs</cite>, otherwise
+None is returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-signaturescoring.scoring_methods.neighborhood_scoring">
+<span id="signaturescoring-scoring-methods-neighborhood-scoring-module"></span><h2>signaturescoring.scoring_methods.neighborhood_scoring module<a class="headerlink" href="#module-signaturescoring.scoring_methods.neighborhood_scoring" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.neighborhood_scoring.score_genes">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.neighborhood_scoring.</span></span><span class="sig-name descname"><span class="pre">score_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_pool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_mean_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_genes_with_invalid_control_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_path_mean_var_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NS_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_control_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#signaturescoring.scoring_methods.neighborhood_scoring.score_genes" title="Permalink to this definition">#</a></dt>
+<dd><p>Neighborhood gene signature scoring method (NS) scores each cell in the dataset for a passed signature
+(gene_list) and stores the scores in the data object.
+Implementation is inspired by score_genes method of Scanpy
+(<a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes">https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes</a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the preprocessed (log-normalized) gene expression data.</p></li>
+<li><p><strong>gene_list</strong> – A list of genes for which the cells are scored for.</p></li>
+<li><p><strong>ctrl_size</strong> – The number of control genes selected for each gene in the gene_list.</p></li>
+<li><p><strong>gene_pool</strong> – The pool of genes out of which control genes can be selected.</p></li>
+<li><p><strong>df_mean_var</strong> – A pandas DataFrame containing the average expression (and variance) for each gene in the dataset.
+If df_mean_var is None, the average gene expression and variance is computed during gene signature scoring</p></li>
+<li><p><strong>remove_genes_with_invalid_control_set</strong> – If true, the scoring method removes genes from the gene_list for which
+no optimal control set can be computed, i.e., if a gene belongs to the ctrl_size/2 genes with the largest
+average expression.</p></li>
+<li><p><strong>store_path_mean_var_data</strong> – Path to store data and visualizations created during average gene expression
+computation. If it is None, data and visualizations are not stored.</p></li>
+<li><p><strong>score_name</strong> – Column name for scores added in <cite>.obs</cite> of data.</p></li>
+<li><p><strong>copy</strong> – Indicates whether original or a copy of <cite>adata</cite> is modified.</p></li>
+<li><p><strong>return_control_genes</strong> – Indicated if method returns selected control genes.</p></li>
+<li><p><strong>return_gene_list</strong> – Indicates if method returns the possibly reduced gene list.</p></li>
+<li><p><strong>use_raw</strong> – Whether to compute gene signature score on raw data stored in <cite>.raw</cite> attribute of <cite>adata</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If copy=True, the method returns a copy of the original data with stored NS scores in <cite>.obs</cite>, otherwise None
+is returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-signaturescoring.scoring_methods.seurat_ag_scoring">
+<span id="signaturescoring-scoring-methods-seurat-ag-scoring-module"></span><h2>signaturescoring.scoring_methods.seurat_ag_scoring module<a class="headerlink" href="#module-signaturescoring.scoring_methods.seurat_ag_scoring" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.seurat_ag_scoring.score_genes">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.seurat_ag_scoring.</span></span><span class="sig-name descname"><span class="pre">score_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_pool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_mean_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_path_mean_var_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Seurat_AG_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_control_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#signaturescoring.scoring_methods.seurat_ag_scoring.score_genes" title="Permalink to this definition">#</a></dt>
+<dd><p>All genes as control genes scoring method (Seurat_AG) scores each cell in the dataset for a passed signature
+(gene_list) and stores the scores in the data object.
+Implementation is inspired by score_genes method of Scanpy
+(<a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes">https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes</a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the preprocessed (log-normalized) gene expression data.</p></li>
+<li><p><strong>gene_list</strong> – A list of genes for which the cells are scored for.</p></li>
+<li><p><strong>n_bins</strong> – The number of average gene expression bins to use.</p></li>
+<li><p><strong>gene_pool</strong> – The pool of genes out of which control genes can be selected.</p></li>
+<li><p><strong>df_mean_var</strong> – A pandas DataFrame containing the average expression (and variance) for each gene in the dataset.
+If df_mean_var is None, the average gene expression and variance is computed during gene signature scoring</p></li>
+<li><p><strong>store_path_mean_var_data</strong> – Path to store data and visualizations created during average gene expression
+computation. If it is None, data and visualizations are not stored.</p></li>
+<li><p><strong>score_name</strong> – Column name for scores added in <cite>.obs</cite> of data.</p></li>
+<li><p><strong>copy</strong> – Indicates whether original or a copy of <cite>adata</cite> is modified.</p></li>
+<li><p><strong>return_control_genes</strong> – Indicated if method returns selected control genes.</p></li>
+<li><p><strong>return_gene_list</strong> – Indicates if method returns the possibly reduced gene list.</p></li>
+<li><p><strong>use_raw</strong> – Whether to compute gene signature score on raw data stored in <cite>.raw</cite> attribute of <cite>adata</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If copy=True, the method returns a copy of the original data with stored AGCGS scores in <cite>.obs</cite>, otherwise None
+is returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-signaturescoring.scoring_methods.seurat_lvg_scoring">
+<span id="signaturescoring-scoring-methods-seurat-lvg-scoring-module"></span><h2>signaturescoring.scoring_methods.seurat_lvg_scoring module<a class="headerlink" href="#module-signaturescoring.scoring_methods.seurat_lvg_scoring" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.seurat_lvg_scoring.score_genes">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.seurat_lvg_scoring.</span></span><span class="sig-name descname"><span class="pre">score_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_pool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lvg_computation_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'v1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lvg_computation_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'seurat'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_norm_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_mean_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_path_mean_var_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Seurat_LVG_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_control_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#signaturescoring.scoring_methods.seurat_lvg_scoring.score_genes" title="Permalink to this definition">#</a></dt>
+<dd><p>Least variable genes as control genes scoring method (Seurat_LVG) scores each cell in the dataset for a passed signature
+(gene_list) and stores the scores in the data object.
+Implementation is inspired by score_genes method of Scanpy
+(<a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes">https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes</a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the preprocessed (log-normalized) gene expression data.</p></li>
+<li><p><strong>gene_list</strong> – A list of genes for which the cells are scored for.</p></li>
+<li><p><strong>ctrl_size</strong> – The number of control genes selected for each gene in the gene_list.</p></li>
+<li><p><strong>n_bins</strong> – The number of average gene expression bins to use.</p></li>
+<li><p><strong>gene_pool</strong> – The pool of genes out of which control genes can be selected.</p></li>
+<li><p><strong>lvg_computation_version</strong> – The version of the least variable genes selection defines if the genes with the
+smallest dispersion are chosen directly from an expression bin (v1) or whether the expressions are binned
+a second round (v2).</p></li>
+<li><p><strong>lvg_computation_method</strong> – Indicates which method should be used to compute the least variable genes. We can use
+‘seurat’ or ‘cell_ranger’. See reference
+<a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.pp.highly_variable_genes.html#scanpy-pp-highly-variable-genes">https://scanpy.readthedocs.io/en/latest/generated/scanpy.pp.highly_variable_genes.html#scanpy-pp-highly-variable-genes</a></p></li>
+<li><p><strong>nr_norm_bins</strong> – If <cite>lvg_computation_version=”v2”</cite>, we need to define the number of subbins used.</p></li>
+<li><p><strong>df_mean_var</strong> – A pandas DataFrame containing the average expression (and variance) for each gene in the dataset.
+If df_mean_var is None, the average gene expression and variance is computed during gene signature scoring.</p></li>
+<li><p><strong>store_path_mean_var_data</strong> – Path to store data and visualizations created during average gene expression
+computation. If it is None, data and visualizations are not stored.</p></li>
+<li><p><strong>score_name</strong> – Column name for scores added in <cite>.obs</cite> of data.</p></li>
+<li><p><strong>copy</strong> – Indicates whether original or a copy of <cite>adata</cite> is modified.</p></li>
+<li><p><strong>return_control_genes</strong> – Indicated if method returns selected control genes.</p></li>
+<li><p><strong>return_gene_list</strong> – Indicates if method returns the possibly reduced gene list.</p></li>
+<li><p><strong>use_raw</strong> – Whether to compute gene signature score on raw data stored in <cite>.raw</cite> attribute of <cite>adata</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If copy=True, the method returns a copy of the original data with stored LVCG scores in <cite>.obs</cite>, otherwise None
+is returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-signaturescoring.scoring_methods.seurat_scoring">
+<span id="signaturescoring-scoring-methods-seurat-scoring-module"></span><h2>signaturescoring.scoring_methods.seurat_scoring module<a class="headerlink" href="#module-signaturescoring.scoring_methods.seurat_scoring" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.seurat_scoring.score_genes">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.seurat_scoring.</span></span><span class="sig-name descname"><span class="pre">score_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_pool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_mean_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_path_mean_var_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Seurat_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_control_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#signaturescoring.scoring_methods.seurat_scoring.score_genes" title="Permalink to this definition">#</a></dt>
+<dd><p>The Python implementation of the scoring method avaiable in R package Seurat (AddModuleScore) based on
+Tirosh et al. 2016 (Seurat) scores each cell in the dataset for a passed signature (gene_list) and
+stores the scores in the data object.
+Implementation is inspired by score_genes method of Scanpy
+(<a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes">https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes</a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the preprocessed (log-normalized) gene expression data.</p></li>
+<li><p><strong>gene_list</strong> – A list of genes for which the cells are scored for.</p></li>
+<li><p><strong>ctrl_size</strong> – The number of control genes selected for each gene in the gene_list.</p></li>
+<li><p><strong>n_bins</strong> – The number of average gene expression bins to use.</p></li>
+<li><p><strong>gene_pool</strong> – The pool of genes out of which control genes can be selected.</p></li>
+<li><p><strong>df_mean_var</strong> – A pandas DataFrame containing the average expression (and variance) for each gene in the dataset.
+If df_mean_var is None, the average gene expression and variance is computed during gene signature scoring.</p></li>
+<li><p><strong>store_path_mean_var_data</strong> – Path to store data and visualizations created during average gene expression
+computation. If it is None, data and visualizations are not stored.</p></li>
+<li><p><strong>score_name</strong> – Column name for scores added in <cite>.obs</cite> of data.</p></li>
+<li><p><strong>random_state</strong> – Seed for random state.</p></li>
+<li><p><strong>copy</strong> – Indicates whether original or a copy of <cite>adata</cite> is modified.</p></li>
+<li><p><strong>return_control_genes</strong> – Indicated if method returns selected control genes.</p></li>
+<li><p><strong>return_gene_list</strong> – Indicates if method returns the possibly reduced gene list.</p></li>
+<li><p><strong>use_raw</strong> – Whether to compute gene signature score on raw data stored in <cite>.raw</cite> attribute of <cite>adata</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If copy=True, the method returns a copy of the original data with stored Seurat scores in <cite>.obs</cite>, otherwise None
+is returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-signaturescoring.scoring_methods.ucell_scoring">
+<span id="signaturescoring-scoring-methods-ucell-scoring-module"></span><h2>signaturescoring.scoring_methods.ucell_scoring module<a class="headerlink" href="#module-signaturescoring.scoring_methods.ucell_scoring" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.ucell_scoring.compute_ranks_and_ustat">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.ucell_scoring.</span></span><span class="sig-name descname"><span class="pre">compute_ranks_and_ustat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_indptr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxRank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signaturescoring.scoring_methods.ucell_scoring.compute_ranks_and_ustat" title="Permalink to this definition">#</a></dt>
+<dd><p>The following method computes for each cell in <cite>X_data</cite> the UCell score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_data</strong> – Current batch of gene expression data.</p></li>
+<li><p><strong>index</strong> – Index of cells.</p></li>
+<li><p><strong>columns</strong> – Names of genes.</p></li>
+<li><p><strong>gene_list</strong> – Signature genes.</p></li>
+<li><p><strong>X_indices</strong> – For sparse matrix reconstruction indices. If None, method assumes <cite>X_data</cite> to be a dense matrix.</p></li>
+<li><p><strong>X_indptr</strong> – For sparse matrix reconstruction index pointers. If None, method assumes <cite>X_data</cite> to be a dense matrix.</p></li>
+<li><p><strong>X_shape</strong> – For sparse matrix reconstruction shape of original matrix. If None, method assumes <cite>X_data</cite> to be
+a dense matrix.</p></li>
+<li><p><strong>maxRank</strong> – Cutoff for maximum rank allowed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>For each cell in X_data the method returns the UCell score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.ucell_scoring.score_genes">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.ucell_scoring.</span></span><span class="sig-name descname"><span class="pre">score_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxRank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'UCell_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joblib_kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'n_jobs':</span> <span class="pre">4}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#signaturescoring.scoring_methods.ucell_scoring.score_genes" title="Permalink to this definition">#</a></dt>
+<dd><p>UCell signature scoring method is a Python implementation of the scoring method proposed by Andreatta et al. 2021.</p>
+<p>Massimo Andreatta and Santiago J Carmona. „UCell: Robust and scalable single-cell
+gene signature scoring“. en. In: Comput. Struct. Biotechnol. J. 19 (June 2021),
+pp. 3796–3798 (cit. on pp. iii, 2, 9, 15, 16).</p>
+<p>Implementation is inspired by score_genes method of Scanpy
+(<a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes">https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.score_genes.html#scanpy.tl.score_genes</a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the gene expression data.</p></li>
+<li><p><strong>gene_list</strong> – A list of genes (signature) for which the cells are scored for.</p></li>
+<li><p><strong>maxRank</strong> – Cutoff for maximum rank allowed.</p></li>
+<li><p><strong>bs</strong> – The number of cells in a processing batch.</p></li>
+<li><p><strong>score_name</strong> – Column name for scores added in <cite>.obs</cite> of data.</p></li>
+<li><p><strong>random_state</strong> – Seed for random state.</p></li>
+<li><p><strong>copy</strong> – Indicates whether original or a copy of <cite>adata</cite> is modified.</p></li>
+<li><p><strong>use_raw</strong> – Whether to compute gene signature score on raw data stored in <cite>.raw</cite> attribute of <cite>adata</cite></p></li>
+<li><p><strong>verbose</strong> – If verbose is larger than 0, print statements are shown.</p></li>
+<li><p><strong>joblib_kwargs</strong> – Keyword argument for parallel execution with joblib.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If copy=True, the method returns a copy of the original data with stored UCell scores in <cite>.obs</cite>, otherwise
+None is returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signaturescoring.scoring_methods.ucell_scoring.u_stat">
+<span class="sig-prename descclassname"><span class="pre">signaturescoring.scoring_methods.ucell_scoring.</span></span><span class="sig-name descname"><span class="pre">u_stat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rank_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxRank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signaturescoring.scoring_methods.ucell_scoring.u_stat" title="Permalink to this definition">#</a></dt>
+<dd><p>The method computes the U statistic on signature gene ranks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rank_value</strong> – Ranks of the signature genes.</p></li>
+<li><p><strong>maxRank</strong> – Cutoff for maximum rank allowed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The U statistic for given signature gene ranks.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-signaturescoring.scoring_methods">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-signaturescoring.scoring_methods" title="Permalink to this heading">#</a></h2>
+<p>The submodule with signature scoring methods</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods.adjusted_neighborhood_scoring">signaturescoring.scoring_methods.adjusted_neighborhood_scoring module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.adjusted_neighborhood_scoring.score_genes"><code class="docutils literal notranslate"><span class="pre">score_genes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods.compute_signature_score">signaturescoring.scoring_methods.compute_signature_score module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.compute_signature_score.compute_signature_score"><code class="docutils literal notranslate"><span class="pre">compute_signature_score()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods.corrected_scanpy_scoring">signaturescoring.scoring_methods.corrected_scanpy_scoring module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.corrected_scanpy_scoring.score_genes"><code class="docutils literal notranslate"><span class="pre">score_genes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods.gene_signature_scoring">signaturescoring.scoring_methods.gene_signature_scoring module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.gene_signature_scoring.score_signature"><code class="docutils literal notranslate"><span class="pre">score_signature()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods.gmm_postprocessing">signaturescoring.scoring_methods.gmm_postprocessing module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.gmm_postprocessing.GMMPostprocessor"><code class="docutils literal notranslate"><span class="pre">GMMPostprocessor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.gmm_postprocessing.GMMPostprocessor.assign_clusters_to_signatures"><code class="docutils literal notranslate"><span class="pre">GMMPostprocessor.assign_clusters_to_signatures()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.gmm_postprocessing.GMMPostprocessor.fit_and_predict"><code class="docutils literal notranslate"><span class="pre">GMMPostprocessor.fit_and_predict()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.gmm_postprocessing.check_score_names"><code class="docutils literal notranslate"><span class="pre">check_score_names()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods.jasmine_scoring">signaturescoring.scoring_methods.jasmine_scoring module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.jasmine_scoring.compute_avg_ranks_sig_subset"><code class="docutils literal notranslate"><span class="pre">compute_avg_ranks_sig_subset()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.jasmine_scoring.compute_avg_ranks_signature"><code class="docutils literal notranslate"><span class="pre">compute_avg_ranks_signature()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.jasmine_scoring.likelihood_calculation"><code class="docutils literal notranslate"><span class="pre">likelihood_calculation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.jasmine_scoring.or_calculation"><code class="docutils literal notranslate"><span class="pre">or_calculation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.jasmine_scoring.preparation"><code class="docutils literal notranslate"><span class="pre">preparation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.jasmine_scoring.rank_calculation"><code class="docutils literal notranslate"><span class="pre">rank_calculation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.jasmine_scoring.score_genes"><code class="docutils literal notranslate"><span class="pre">score_genes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods.neighborhood_scoring">signaturescoring.scoring_methods.neighborhood_scoring module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.neighborhood_scoring.score_genes"><code class="docutils literal notranslate"><span class="pre">score_genes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods.seurat_ag_scoring">signaturescoring.scoring_methods.seurat_ag_scoring module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.seurat_ag_scoring.score_genes"><code class="docutils literal notranslate"><span class="pre">score_genes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods.seurat_lvg_scoring">signaturescoring.scoring_methods.seurat_lvg_scoring module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.seurat_lvg_scoring.score_genes"><code class="docutils literal notranslate"><span class="pre">score_genes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods.seurat_scoring">signaturescoring.scoring_methods.seurat_scoring module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.seurat_scoring.score_genes"><code class="docutils literal notranslate"><span class="pre">score_genes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods.ucell_scoring">signaturescoring.scoring_methods.ucell_scoring module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.ucell_scoring.compute_ranks_and_ustat"><code class="docutils literal notranslate"><span class="pre">compute_ranks_and_ustat()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.ucell_scoring.score_genes"><code class="docutils literal notranslate"><span class="pre">score_genes()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signaturescoring.scoring_methods.ucell_scoring.u_stat"><code class="docutils literal notranslate"><span class="pre">u_stat()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-signaturescoring.scoring_methods">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../_sources/source/signaturescoring.scoring_methods.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, ANS contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

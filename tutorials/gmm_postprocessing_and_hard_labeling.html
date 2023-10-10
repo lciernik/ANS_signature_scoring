@@ -1,0 +1,1177 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial: GMM Postprocessing and Hard Labeling &#8212; ANS  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ccbe24c1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/gmm_postprocessing_and_hard_labeling';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial: Scoring with ANS in R" href="ANS_with_R.html" />
+    <link rel="prev" title="Tutorial: Scoring with ANS and other gene signature scoring methods" href="basic_scoring.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">ANS  documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../tutorials.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lciernik/ANS_signature_scoring" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../tutorials.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lciernik/ANS_signature_scoring" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="basic_scoring.html">Tutorial: Scoring with ANS and other gene signature scoring methods</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Tutorial: GMM Postprocessing and Hard Labeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ANS_with_R.html">Tutorial: Scoring with ANS in R</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Tutorial:...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="Tutorial:-GMM-Postprocessing-and-Hard-Labeling">
+<h1>Tutorial: GMM Postprocessing and Hard Labeling<a class="headerlink" href="#Tutorial:-GMM-Postprocessing-and-Hard-Labeling" title="Permalink to this heading">#</a></h1>
+<p>The following jupyter notebook focuses on the GMM postprocessing and hard labeling approach considered in the article of this package. The GMM postprocessing allows mapping scores to probabilities. During hard labeling, we aim to assign each cell a state based on the signature scores associated with the corresponding state. Depending on our data assumptions, we either consider that a cell belongs to one of the signature associated states or none of them. Therefore, we will consider two scenarios
+on the preprocessed PBMC dataset also used in the <code class="docutils literal notranslate"><span class="pre">basic_usage.ipynb</span></code> jupyter notebook. :</p>
+<ol class="arabic simple">
+<li><p>We score <strong>three signatures</strong>, one associated with each of the three available cell states: B-, Monocytes, and NK-cells. Since each cell belongs to one of the three cell-types, we select <strong>K=3</strong> during GMM postprocessing. Finally, we can assign the cell state associated with the highest-scoring/ highest probability signature to a cell.</p></li>
+<li><p>We score <strong>two signatures</strong> associated with two of the three available cell states. Now we assume that a cell can belong to either one of the cell states we score <strong>or</strong> to none. Therefore we select <strong>K=2+1</strong> during GMM postprocessing (+ 1 being the remaining class). Hard labeling on probabilities is based on selecting the cell state associated with the signature with the highest probability. The process on scores, however, requires finding the correct signature-specific thresholds for each
+signature and then assigning a cell with the state of the remaining class if its scores are below the signature-specific thresholds. See below for more information.</p></li>
+</ol>
+<p><em>We will use the scored data from the ``basic_usage.ipynb`` jupyter notebook.</em></p>
+<p><strong>Structure</strong>: * Loading preprocessed and scored data * GMM Postprocessing * Hard Labeling</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">f1_score</span>
+
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">argrelmin</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">signaturescoring.scoring_methods.gmm_postprocessing</span> <span class="kn">import</span> <span class="n">GMMPostprocessor</span>
+
+<span class="n">sc</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<section id="Load-preprocessed-and-scored-data">
+<h2>Load preprocessed and scored data<a class="headerlink" href="#Load-preprocessed-and-scored-data" title="Permalink to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s1">&#39;tut_data/pp_pbmc_b_mono_nk_scored.h5ad&#39;</span><span class="p">)</span>
+
+<span class="c1">## To avoid errors</span>
+<span class="k">if</span> <span class="s1">&#39;log1p&#39;</span> <span class="ow">in</span> <span class="n">adata</span><span class="o">.</span><span class="n">uns_keys</span><span class="p">():</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">&#39;log1p&#39;</span><span class="p">][</span><span class="s1">&#39;base&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">&#39;log1p&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;base&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;celltype.l1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Mono    43553
+NK      14408
+B       10613
+Name: celltype.l1, dtype: int64
+</pre></div></div>
+</div>
+</section>
+<section id="GMM-Postprocessing">
+<h2>GMM Postprocessing<a class="headerlink" href="#GMM-Postprocessing" title="Permalink to this heading">#</a></h2>
+<p>As previously explained we would like to map the signature scores to probabilities using a GMM. The <code class="docutils literal notranslate"><span class="pre">GMMPostprocessor</span></code> first trains a GMM on the passed score columns (3 columns in scenario 1, 2 columns in scenario 2). Then we assign a cluster to a cell state based on the correlation of the pobabilities and the signature scores.</p>
+<section id="Scenario-1:-Three-signatures">
+<h3>Scenario 1: Three signatures<a class="headerlink" href="#Scenario-1:-Three-signatures" title="Permalink to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scoring_names_3_sigs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="mi">3</span><span class="p">):])</span>
+<span class="n">scoring_names_3_sigs</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;ANS_B&#39;,
+ &#39;ANS_Mono&#39;,
+ &#39;ANS_NK&#39;,
+ &#39;Scanpy_B&#39;,
+ &#39;Scanpy_Mono&#39;,
+ &#39;Scanpy_NK&#39;,
+ &#39;Seurat_B&#39;,
+ &#39;Seurat_Mono&#39;,
+ &#39;Seurat_NK&#39;,
+ &#39;Seurat_AG_B&#39;,
+ &#39;Seurat_AG_Mono&#39;,
+ &#39;Seurat_AG_NK&#39;,
+ &#39;Seurat_LVG_B&#39;,
+ &#39;Seurat_LVG_Mono&#39;,
+ &#39;Seurat_LVG_NK&#39;,
+ &#39;Jasmine_LH_B&#39;,
+ &#39;Jasmine_LH_Mono&#39;,
+ &#39;Jasmine_LH_NK&#39;,
+ &#39;Jasmine_OR_B&#39;,
+ &#39;Jasmine_OR_Mono&#39;,
+ &#39;Jasmine_OR_NK&#39;,
+ &#39;UCell_B&#39;,
+ &#39;UCell_Mono&#39;,
+ &#39;UCell_NK&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Helper list with colum names</span>
+<span class="n">scoring_names_3_gmm</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For the THREE cell state signature score colums of each scoring method we fit a</span>
+<span class="c1"># GMM to convert the scores into probabilities</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scoring_names_3_sigs</span><span class="p">),</span> <span class="mi">3</span><span class="p">):</span>
+
+    <span class="c1"># initialize GMMPostprocessor</span>
+    <span class="n">gmm_post</span> <span class="o">=</span> <span class="n">GMMPostprocessor</span><span class="p">(</span>
+        <span class="n">n_components</span><span class="o">=</span><span class="mi">3</span>
+    <span class="p">)</span>
+
+    <span class="c1"># fit the GMM model on the 3 columns of the scores</span>
+    <span class="n">store_name_pred</span><span class="p">,</span> <span class="n">store_names_proba</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">gmm_post</span><span class="o">.</span><span class="n">fit_and_predict</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">scoring_names_3_sigs</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">)])</span>
+
+    <span class="c1"># assign clusters to signatures</span>
+    <span class="n">assignments</span> <span class="o">=</span> <span class="n">gmm_post</span><span class="o">.</span><span class="n">assign_clusters_to_signatures</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">scoring_names_3_sigs</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">)],</span> <span class="n">store_names_proba</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">assignments</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">assignments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">key</span><span class="o">+</span><span class="s1">&#39;_gmm_3sigs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">val</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">scoring_names_3_gmm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="o">+</span><span class="s1">&#39;_gmm_3sigs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;ANS_B&#39;: &#39;ANS_2_GMM_proba&#39;, &#39;ANS_Mono&#39;: &#39;ANS_0_GMM_proba&#39;, &#39;ANS_NK&#39;: &#39;ANS_1_GMM_proba&#39;}
+{&#39;Scanpy_B&#39;: &#39;Scanpy_2_GMM_proba&#39;, &#39;Scanpy_Mono&#39;: &#39;Scanpy_1_GMM_proba&#39;, &#39;Scanpy_NK&#39;: &#39;Scanpy_0_GMM_proba&#39;}
+{&#39;Seurat_B&#39;: &#39;Seurat_2_GMM_proba&#39;, &#39;Seurat_Mono&#39;: &#39;Seurat_1_GMM_proba&#39;, &#39;Seurat_NK&#39;: &#39;Seurat_0_GMM_proba&#39;}
+{&#39;Seurat_AG_B&#39;: &#39;Seurat_AG_2_GMM_proba&#39;, &#39;Seurat_AG_Mono&#39;: &#39;Seurat_AG_0_GMM_proba&#39;, &#39;Seurat_AG_NK&#39;: &#39;Seurat_AG_1_GMM_proba&#39;}
+{&#39;Seurat_LVG_B&#39;: &#39;Seurat_LVG_2_GMM_proba&#39;, &#39;Seurat_LVG_Mono&#39;: &#39;Seurat_LVG_0_GMM_proba&#39;, &#39;Seurat_LVG_NK&#39;: &#39;Seurat_LVG_1_GMM_proba&#39;}
+{&#39;Jasmine_LH_B&#39;: &#39;Jasmine_LH_2_GMM_proba&#39;, &#39;Jasmine_LH_Mono&#39;: &#39;Jasmine_LH_1_GMM_proba&#39;, &#39;Jasmine_LH_NK&#39;: &#39;Jasmine_LH_0_GMM_proba&#39;}
+{&#39;Jasmine_OR_B&#39;: &#39;Jasmine_OR_0_GMM_proba&#39;, &#39;Jasmine_OR_Mono&#39;: &#39;Jasmine_OR_1_GMM_proba&#39;, &#39;Jasmine_OR_NK&#39;: &#39;Jasmine_OR_2_GMM_proba&#39;}
+{&#39;UCell_B&#39;: &#39;UCell_2_GMM_proba&#39;, &#39;UCell_Mono&#39;: &#39;UCell_0_GMM_proba&#39;, &#39;UCell_NK&#39;: &#39;UCell_1_GMM_proba&#39;}
+</pre></div></div>
+</div>
+</section>
+<section id="Scenario-2:-Two-signatures">
+<h3>Scenario 2: Two signatures<a class="headerlink" href="#Scenario-2:-Two-signatures" title="Permalink to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scoring_names_2_sigs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">scoring_names_3_sigs</span> <span class="k">if</span> <span class="s1">&#39;NK&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">scoring_names_2_sigs</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;ANS_B&#39;,
+ &#39;ANS_Mono&#39;,
+ &#39;Scanpy_B&#39;,
+ &#39;Scanpy_Mono&#39;,
+ &#39;Seurat_B&#39;,
+ &#39;Seurat_Mono&#39;,
+ &#39;Seurat_AG_B&#39;,
+ &#39;Seurat_AG_Mono&#39;,
+ &#39;Seurat_LVG_B&#39;,
+ &#39;Seurat_LVG_Mono&#39;,
+ &#39;Jasmine_LH_B&#39;,
+ &#39;Jasmine_LH_Mono&#39;,
+ &#39;Jasmine_OR_B&#39;,
+ &#39;Jasmine_OR_Mono&#39;,
+ &#39;UCell_B&#39;,
+ &#39;UCell_Mono&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Helper list with colum names</span>
+<span class="n">scoring_names_2_gmm</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For the TWO cell state signature score colums of each scoring method we fit a</span>
+<span class="c1"># GMM to convert the scores into probabilities</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scoring_names_2_sigs</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="c1"># initialize GMMPostprocessor</span>
+    <span class="n">gmm_post</span> <span class="o">=</span> <span class="n">GMMPostprocessor</span><span class="p">(</span>
+        <span class="n">n_components</span><span class="o">=</span><span class="mi">3</span>
+    <span class="p">)</span>
+
+    <span class="c1"># fit the GMM model on the 2 columns of the scores</span>
+    <span class="n">store_name_pred</span><span class="p">,</span> <span class="n">store_names_proba</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">gmm_post</span><span class="o">.</span><span class="n">fit_and_predict</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">scoring_names_2_sigs</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">)])</span>
+
+    <span class="c1"># assign clusters to signatures</span>
+    <span class="n">assignments</span> <span class="o">=</span> <span class="n">gmm_post</span><span class="o">.</span><span class="n">assign_clusters_to_signatures</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">scoring_names_2_sigs</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">)],</span> <span class="n">store_names_proba</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">assignments</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">assignments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span><span class="s1">&#39;rest&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">key</span><span class="o">+</span><span class="s1">&#39;_gmm_2sigs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">val</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">scoring_names_2_gmm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="o">+</span><span class="s1">&#39;_gmm_2sigs&#39;</span><span class="p">)</span>
+
+    <span class="n">curr_name</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">scoring_names_2_sigs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">curr_name</span> <span class="o">+</span><span class="s1">&#39;_NK_gmm_2sigs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">assignments</span><span class="p">[</span><span class="s1">&#39;rest&#39;</span><span class="p">]))]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">scoring_names_2_gmm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_name</span> <span class="o">+</span><span class="s1">&#39;_NK_gmm_2sigs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;ANS_B&#39;: &#39;ANS_0_GMM_proba&#39;, &#39;ANS_Mono&#39;: &#39;ANS_1_GMM_proba&#39;, &#39;rest&#39;: {&#39;ANS_2_GMM_proba&#39;}}
+{&#39;Scanpy_B&#39;: &#39;Scanpy_0_GMM_proba&#39;, &#39;Scanpy_Mono&#39;: &#39;Scanpy_1_GMM_proba&#39;, &#39;rest&#39;: {&#39;Scanpy_2_GMM_proba&#39;}}
+{&#39;Seurat_B&#39;: &#39;Seurat_1_GMM_proba&#39;, &#39;Seurat_Mono&#39;: &#39;Seurat_0_GMM_proba&#39;, &#39;rest&#39;: {&#39;Seurat_2_GMM_proba&#39;}}
+{&#39;Seurat_AG_B&#39;: &#39;Seurat_AG_0_GMM_proba&#39;, &#39;Seurat_AG_Mono&#39;: &#39;Seurat_AG_1_GMM_proba&#39;, &#39;rest&#39;: {&#39;Seurat_AG_2_GMM_proba&#39;}}
+{&#39;Seurat_LVG_B&#39;: &#39;Seurat_LVG_2_GMM_proba&#39;, &#39;Seurat_LVG_Mono&#39;: &#39;Seurat_LVG_0_GMM_proba&#39;, &#39;rest&#39;: {&#39;Seurat_LVG_1_GMM_proba&#39;}}
+{&#39;Jasmine_LH_B&#39;: &#39;Jasmine_LH_1_GMM_proba&#39;, &#39;Jasmine_LH_Mono&#39;: &#39;Jasmine_LH_2_GMM_proba&#39;, &#39;rest&#39;: {&#39;Jasmine_LH_0_GMM_proba&#39;}}
+{&#39;Jasmine_OR_B&#39;: &#39;Jasmine_OR_1_GMM_proba&#39;, &#39;Jasmine_OR_Mono&#39;: &#39;Jasmine_OR_0_GMM_proba&#39;, &#39;rest&#39;: {&#39;Jasmine_OR_2_GMM_proba&#39;}}
+{&#39;UCell_B&#39;: &#39;UCell_1_GMM_proba&#39;, &#39;UCell_Mono&#39;: &#39;UCell_0_GMM_proba&#39;, &#39;rest&#39;: {&#39;UCell_2_GMM_proba&#39;}}
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## remove all unused obs columns</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;gmm&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;sigs&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">())],</span>
+               <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Visualizing-GMM-pobabilites">
+<h3>Visualizing GMM pobabilites<a class="headerlink" href="#Visualizing-GMM-pobabilites" title="Permalink to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">pca</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/local/lciernik/miniconda3/envs/test_env/lib/python3.8/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># scenario 1 probabilities</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;celltype.l1&#39;</span><span class="p">,</span> <span class="s1">&#39;celltype.l2&#39;</span><span class="p">,</span> <span class="s1">&#39;celltype.l3&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">scoring_names_3_gmm</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/local/lciernik/miniconda3/envs/test_env/lib/python3.8/site-packages/scanpy/plotting/_tools/scatterplots.py:391: UserWarning: No data for colormapping provided via &#39;c&#39;. Parameters &#39;cmap&#39; will be ignored
+  cax = scatter(
+/local/lciernik/miniconda3/envs/test_env/lib/python3.8/site-packages/scanpy/plotting/_tools/scatterplots.py:391: UserWarning: No data for colormapping provided via &#39;c&#39;. Parameters &#39;cmap&#39; will be ignored
+  cax = scatter(
+/local/lciernik/miniconda3/envs/test_env/lib/python3.8/site-packages/scanpy/plotting/_tools/scatterplots.py:391: UserWarning: No data for colormapping provided via &#39;c&#39;. Parameters &#39;cmap&#39; will be ignored
+  cax = scatter(
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_17_1.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_17_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># scenario 2 probabilities</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;celltype.l1&#39;</span><span class="p">,</span> <span class="s1">&#39;celltype.l2&#39;</span><span class="p">,</span> <span class="s1">&#39;celltype.l3&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">scoring_names_2_gmm</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/local/lciernik/miniconda3/envs/test_env/lib/python3.8/site-packages/scanpy/plotting/_tools/scatterplots.py:391: UserWarning: No data for colormapping provided via &#39;c&#39;. Parameters &#39;cmap&#39; will be ignored
+  cax = scatter(
+/local/lciernik/miniconda3/envs/test_env/lib/python3.8/site-packages/scanpy/plotting/_tools/scatterplots.py:391: UserWarning: No data for colormapping provided via &#39;c&#39;. Parameters &#39;cmap&#39; will be ignored
+  cax = scatter(
+/local/lciernik/miniconda3/envs/test_env/lib/python3.8/site-packages/scanpy/plotting/_tools/scatterplots.py:391: UserWarning: No data for colormapping provided via &#39;c&#39;. Parameters &#39;cmap&#39; will be ignored
+  cax = scatter(
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_18_1.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_18_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Hard-Labeling">
+<h2>Hard Labeling<a class="headerlink" href="#Hard-Labeling" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h3>Scenario 1: Three signatures<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>As mentioned in the introduction of this jupyter notebook, we can apply hard labeling in this scenario by assigning the cell state associated with the highest-scoring signature/signature with the highest probability to each cell.</p>
+<p>For both, scores and probabilities, we select the score/probability columns belonging to each scoring method and assign the label to a cell with the rowwise max.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_pred_cols_1</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+<section id="Scores">
+<h4>Scores<a class="headerlink" href="#Scores" title="Permalink to this heading">#</a></h4>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scoring_names_3_sigs</span><span class="p">),</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># get the name of the scoring method</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">scoring_names_3_sigs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># select argmax for each cell (each row)</span>
+    <span class="n">curr_val</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">scoring_names_3_sigs</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">)]]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+    <span class="n">curr_val</span> <span class="o">=</span> <span class="n">curr_val</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># store prediction</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">_scores_HL_3sigs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">curr_val</span>
+    <span class="n">all_pred_cols_1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">_scores_HL_3sigs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Probabilities">
+<h4>Probabilities<a class="headerlink" href="#Probabilities" title="Permalink to this heading">#</a></h4>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scoring_names_3_gmm</span><span class="p">),</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># get the name of the scoring method</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">scoring_names_3_gmm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># select argmax for each cell (each row)</span>
+    <span class="n">curr_val</span><span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">scoring_names_3_gmm</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">)]]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+    <span class="n">curr_val</span><span class="o">=</span><span class="n">curr_val</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># store prediction</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">_probabilities_HL_3sigs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">curr_val</span>
+    <span class="n">all_pred_cols_1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">_probabilities_HL_3sigs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="id2">
+<h3>Scenario 2: Two signatures<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>In the second scenario, hard labeling is more challenging based on scores than on probabilities. Hard labeling on probabilities is done equivalently to scenario 1.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_pred_cols_2</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+<section id="id3">
+<h4>Scores<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
+<p>When hard-labeling on scores in this scenario, we require to find the adequate score-thresholds for each signature. After selecting a B- and Monocyte-threshold, we can simply assign cells with scores below both thresholds as NK-cells. To find the thresholds we find the minima in the score histograms of both signatures. We will visualize the density plots to identify theses thresholds.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_score_distributions</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">scores_B</span><span class="p">,</span> <span class="n">scores_Mono</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+    <span class="n">hist_one</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">scores_B</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">x_min_B</span> <span class="o">=</span> <span class="n">argrelmin</span><span class="p">(</span><span class="n">hist_one</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist_one</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">x_min_B</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">hist_one</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">e</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;mins B scores dist&#39;</span><span class="p">)</span>
+
+
+    <span class="n">hist_two</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">scores_Mono</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">x_min_Mono</span> <span class="o">=</span> <span class="n">argrelmin</span><span class="p">(</span><span class="n">hist_two</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist_two</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">x_min_Mono</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">hist_two</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">e</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;mins Mono scores dist&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">get_score_threshs</span><span class="p">(</span><span class="n">selected_thresh</span><span class="p">,</span> <span class="n">scores_B</span><span class="p">,</span> <span class="n">scores_Mono</span><span class="p">):</span>
+    <span class="n">hist_one</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">scores_B</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">hist_two</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">scores_Mono</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">thresh_one</span> <span class="o">=</span> <span class="n">hist_one</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">selected_thresh</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">thresh_two</span> <span class="o">=</span> <span class="n">hist_two</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">selected_thresh</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">thresh_one</span><span class="p">,</span> <span class="n">thresh_two</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scoring_names_2_sigs</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">scoring_names_2_sigs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># convert threshs to score threshs</span>
+    <span class="n">B_scores</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">scoring_names_2_sigs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+    <span class="n">M_scores</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">scoring_names_2_sigs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">plot_score_distributions</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">B_scores</span><span class="p">,</span> <span class="n">M_scores</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_0.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_1.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_2.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_2.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_3.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_3.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_4.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_4.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_5.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_5.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_6.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_6.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_7.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_30_7.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Select manually fromg the figures the disered thresholds and convert them then to score thresholds</span>
+<span class="n">selected_thresh</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ANS&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">36</span><span class="p">],</span>
+    <span class="s1">&#39;Scanpy&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">36</span><span class="p">,</span> <span class="mi">42</span><span class="p">],</span>
+    <span class="s1">&#39;Seurat&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">37</span><span class="p">,</span> <span class="mi">37</span><span class="p">],</span>
+    <span class="s1">&#39;Seurat_AG&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">35</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+    <span class="s1">&#39;Seurat_LVG&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">41</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span>
+    <span class="s1">&#39;Jasmine_LH&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">39</span><span class="p">,</span> <span class="mi">51</span><span class="p">],</span>
+    <span class="s1">&#39;Jasmine_OR&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">33</span><span class="p">,</span> <span class="mi">41</span><span class="p">],</span>
+    <span class="s1">&#39;UCell&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">26</span><span class="p">,</span> <span class="mi">38</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">threshs</span><span class="p">),</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">selected_thresh</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scoring_names_2_sigs</span><span class="p">),</span> <span class="mi">2</span><span class="p">)):</span>
+    <span class="c1"># convert threshs to score threshs</span>
+    <span class="n">B_scores</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">scoring_names_2_sigs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+    <span class="n">M_scores</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">scoring_names_2_sigs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="p">[</span><span class="n">B_thresh</span><span class="p">,</span> <span class="n">M_thresh</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_score_threshs</span><span class="p">(</span><span class="n">threshs</span><span class="p">,</span> <span class="n">B_scores</span><span class="p">,</span> <span class="n">M_scores</span><span class="p">)</span>
+
+    <span class="c1"># assign cell state to cells.</span>
+    <span class="n">curr_val</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">scoring_names_2_sigs</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">)]]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+    <span class="n">curr_val</span> <span class="o">=</span> <span class="n">curr_val</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">curr_val</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">B_scores</span><span class="o">&lt;</span><span class="n">B_thresh</span><span class="p">)</span><span class="o">&amp;</span><span class="p">((</span><span class="n">M_scores</span><span class="o">&lt;</span><span class="n">M_thresh</span><span class="p">))]</span> <span class="o">=</span> <span class="s1">&#39;NK&#39;</span>
+    <span class="c1"># store prediction</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">_scores_HL_2sigs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">curr_val</span>
+    <span class="n">all_pred_cols_2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">_scores_HL_2sigs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h4>Probabilities<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scoring_names_2_gmm</span><span class="p">),</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># get the name of the scoring method</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">scoring_names_2_gmm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># select argmax for each cell (each row)</span>
+    <span class="n">curr_val</span><span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">scoring_names_2_gmm</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">)]]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+    <span class="n">curr_val</span><span class="o">=</span><span class="n">curr_val</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># store prediction</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">_probabilities_HL_2sigs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">curr_val</span>
+    <span class="n">all_pred_cols_2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">_probabilities_HL_2sigs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="Performances">
+<h2>Performances<a class="headerlink" href="#Performances" title="Permalink to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gt</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;celltype.l1&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<section id="id5">
+<h3>Scenario 1: Three signatures<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">pred_col</span> <span class="ow">in</span> <span class="n">all_pred_cols_1</span><span class="p">:</span>
+    <span class="n">splitted</span> <span class="o">=</span> <span class="n">pred_col</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">pred_col</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">f1sc</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">gt</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span>
+
+    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+       <span class="s1">&#39;method&#39;</span><span class="p">:</span><span class="n">splitted</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+       <span class="s1">&#39;mode&#39;</span><span class="p">:</span><span class="n">splitted</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+       <span class="s1">&#39;f1-score&#39;</span><span class="p">:</span><span class="n">f1sc</span>
+    <span class="p">})</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;method&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;f1-score&#39;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;(Weighted) F1-score hard labeling with scores/probabilities&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_39_0.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_39_0.png" />
+</div>
+</div>
+</section>
+<section id="id6">
+<h3>Scenario 2: Two signatures<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">pred_col</span> <span class="ow">in</span> <span class="n">all_pred_cols_2</span><span class="p">:</span>
+    <span class="n">splitted</span> <span class="o">=</span> <span class="n">pred_col</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">pred_col</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">f1sc</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">gt</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span>
+
+    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+       <span class="s1">&#39;method&#39;</span><span class="p">:</span><span class="n">splitted</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+       <span class="s1">&#39;mode&#39;</span><span class="p">:</span><span class="n">splitted</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+       <span class="s1">&#39;f1-score&#39;</span><span class="p">:</span><span class="n">f1sc</span>
+    <span class="p">})</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;method&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;f1-score&#39;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;(Weighted) F1-score hard labeling with scores/probabilities&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_gmm_postprocessing_and_hard_labeling_42_0.png" src="../_images/tutorials_gmm_postprocessing_and_hard_labeling_42_0.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="basic_scoring.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tutorial: Scoring with ANS and other gene signature scoring methods</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ANS_with_R.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial: Scoring with ANS in R</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-preprocessed-and-scored-data">Load preprocessed and scored data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#GMM-Postprocessing">GMM Postprocessing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Scenario-1:-Three-signatures">Scenario 1: Three signatures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Scenario-2:-Two-signatures">Scenario 2: Two signatures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualizing-GMM-pobabilites">Visualizing GMM pobabilites</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Hard-Labeling">Hard Labeling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Scenario 1: Three signatures</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Scores">Scores</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Probabilities">Probabilities</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Scenario 2: Two signatures</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Scores</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Probabilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Performances">Performances</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Scenario 1: Three signatures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Scenario 2: Two signatures</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../_sources/tutorials/gmm_postprocessing_and_hard_labeling.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, ANS contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

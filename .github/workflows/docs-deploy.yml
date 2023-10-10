@@ -1,0 +1,33 @@
+# Builds Sphinx documentation and pushes it to the gh-pages branch,
+# so that it is deployed.
+# This is based on https://github.com/marketplace/actions/sphinx-to-github-pages
+name: docs-deploy
+on:
+  push:
+    branches:
+    - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+    - name: Install Pandoc
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pandoc
+    - name: Install theme
+      run: pip install pydata-sphinx-theme
+    - name: Build and Commit
+      uses: sphinx-notes/pages@v2
+      with:
+        sphinx_version: '7.1.2'
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages
