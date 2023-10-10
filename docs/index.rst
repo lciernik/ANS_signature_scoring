@@ -7,6 +7,11 @@ ANS: Adjusted Neighborhood Scoring
 ==================================
 In the field of single-cell RNA sequencing (scRNA-seq), gene signature scoring is integral for pinpointing and characterizing distinct cell populations. However, challenges arise in ensuring the robustness and comparability of scores across various gene signatures and across different batches and conditions. Addressing these challenges, we evaluated the stability of established methods such as Scanpy, UCell, and JASMINE in the context of scoring cells of different types and states. Additionally, we introduced a new scoring method, the Adjusted Neighbourhood Scoring (ANS), that builds on the traditional Scanpy method and improves the handling of the control gene sets. We further exemplified the usability of ANS scoring in differentiating between cancer-associated fibroblasts and malignant cells undergoing epithelial-mesenchymal transition (EMT) in four cancer types and evidenced excellent classification performance (AUCPR train: 0.95-0.99, AUCPR test: 0.91-0.99). In summary, our research introduces the ANS as a robust and deterministic scoring approach that enables the comparison of diverse gene signatures. The results of our study contribute to the development of more accurate and reliable methods for analyzing scRNA-seq data.
 
+.. image:: img/website_figure.png
+  :width: 600
+  :alt: Performance comparison ANS and other scRNA-seq scoring methods on celltype annotation.
+  :align: center
+
 .. note::
    A preprint describing ANS and showing the results of signature scoring methods benchmark is  `now available <https://doi.org/10.1101/2023.09.20.558114>`_.
 
