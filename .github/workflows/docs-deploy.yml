@@ -21,7 +21,7 @@ jobs:
     - name: Build and Commit
       uses: sphinx-notes/pages@v2
       with:
-        sphinx_version: '5.3.0'
+        sphinx_version: '7.1.2'
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
