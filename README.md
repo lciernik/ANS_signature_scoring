@@ -1,3 +1,5 @@
+[![docs-deploy](https://github.com/lciernik/ANS_signature_scoring/actions/workflows/docs-deploy.yml/badge.svg)](https://github.com/lciernik/ANS_signature_scoring/actions/workflows/docs-deploy.yml)
+
 # ANS: Adjusted Neighborhood Scoring to  improve assessment of gene signatures in single-cell RNA-seq data
 A gene expression signature scoring Python package.  
 
@@ -5,6 +7,10 @@ This repository accompanies the work: Laure Ciernik, Agnieszka Kraft, Joséphine
 Valentina Boeva, “ANS: Adjusted Neighborhood Scoring to  improve assessment of gene signatures in single-cell RNA-seq data”. doi: [https://doi.org/10.1101/2023.09.20.558114](https://doi.org/10.1101/2023.09.20.558114)
 
 *Note: This repository is in the experimental stage. Changes to the API may appear.*
+
+## Resources
+
+For tutorials and API description, see our [documentation](https://lciernik.github.io/ANS_signature_scoring).
 
 ## Installation 
 We aim for Python versions 3.8+. Run:
