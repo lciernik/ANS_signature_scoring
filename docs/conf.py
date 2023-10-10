@@ -12,11 +12,11 @@
 import os
 import sys
 
-sys.path.append('../signaturescoring')
-sys.path.append('../tutorials')
-sys.path.append('..')
+#sys.path.append('../signaturescoring')
+#sys.path.append('../tutorials')
+#sys.path.append('..')
 #sys.path.insert(0, os.path.abspath("../tutorials"))
-#sys.path.insert(0, os.path.abspath("../signaturescoring"))
+sys.path.insert(0, os.path.abspath("../signaturescoring"))
 
 
 # -- Project information -----------------------------------------------------
@@ -39,6 +39,7 @@ extensions = [
     "sphinx.ext.todo",
     "nbsphinx",
     "sphinx_gallery.load_style",
+    "sphinx.ext.autosummary",
 ]
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
