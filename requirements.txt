@@ -1,0 +1,15 @@
+numpy
+pandas
+scikit-misc
+scanpy
+seaborn
+scipy
+scikit-learn
+gdown
+joblib
+pytest
+sphinx
+nbsphinx
+pydata-sphinx-theme
+sphinx-gallery
+notebook

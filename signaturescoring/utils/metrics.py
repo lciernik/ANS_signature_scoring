@@ -1,18 +1,18 @@
 import logging
 import os
 import warnings
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
 from anndata import AnnData
-from pandas import DataFrame
+from pandas import DataFrame, Series
 from scipy.stats import mannwhitneyu, ks_2samp
 from sklearn import svm
 from sklearn.metrics import roc_auc_score, f1_score, jaccard_score, balanced_accuracy_score
 
 
-def check_label_col_and_get_GT(adata_obs: DataFrame, label_col: str = "healthy", label_of_interest: str = "unhealthy"):
+def _check_label_col_and_get_GT(adata_obs: DataFrame, label_col: str = "healthy", label_of_interest: str = "unhealthy") -> Tuple[str, str, Series]:
     """
     The method checks for the existence of the given label column and positive class label. It then gets the ground
     truth vector, required for evaluation of the performance metrics.
@@ -56,15 +56,20 @@ def check_label_col_and_get_GT(adata_obs: DataFrame, label_col: str = "healthy",
     return label_G1, label_G2, gt
 
 
-def check_scoring_names(adata_obs: DataFrame, scoring_names: List[str]) -> List[str]:
+def _check_scoring_names(adata_obs: DataFrame, scoring_names: List[str]) -> List[str]:
     """
     The method checks for the existence of the column names associated with signature scores.
+
     Args:
         adata_obs: '.obs' part of an AnnData object.
         scoring_names: Names of signature scores in '.obs' to be evaluated.
 
     Returns:
         Filtered list of signature score column names.
+
+    Raises:
+        AssertionError
+            If scoring_names is not of type list and contains more than one element.
     """
     if isinstance(scoring_names, str):
         scoring_names = [scoring_names]
@@ -103,6 +108,7 @@ def get_AUC_and_F1_performance(
 ) -> DataFrame:
     """
     Compute the AUCROC and classification metrics for signature scores for given labels.
+
     Args:
         adata_obs: '.obs' part of an AnnData object.
         scoring_names: Names of signature scores in '.obs' to be evaluated.
@@ -118,9 +124,9 @@ def get_AUC_and_F1_performance(
     Returns:
         DataFrame with the evaluated performance metrics
     """
-    scoring_names = check_scoring_names(adata_obs, scoring_names)
+    scoring_names = _check_scoring_names(adata_obs, scoring_names)
 
-    label_G1, label_G2, curr_GT = check_label_col_and_get_GT(adata_obs, label_col, label_of_interest)
+    label_G1, label_G2, curr_GT = _check_label_col_and_get_GT(adata_obs, label_col, label_of_interest)
     pos_label_G1 = (np.argwhere(curr_GT.cat.categories == label_G1)).item()
 
     if old_df is not None:
@@ -153,21 +159,6 @@ def get_AUC_and_F1_performance(
             "Statistic": auc,
             "pvalue": np.nan,
         })
-
-        # compute separating hyperplane
-        # X = np.transpose(np.vstack((curr_score, np.ones_like(curr_score))))
-        # clf = svm.SVC(kernel='linear')
-        # clf.fit(X, adata_obs[label_col])
-        # w = clf.coef_[0]
-        # x_0 = -clf.intercept_[0] / w[0]
-        # auc_dist = (auc + (1 - 0.5 * (np.tanh(abs(x_0))))) / 2
-
-        # new_rows.append({
-        #    "Scoring method": t_score,
-        #    "Test method": 'auc-dist',
-        #    "Statistic": auc_dist,
-        #    "pvalue": np.nan,
-        # })
 
         # compute F1 for 0 threshold
         scores_hard_labels = curr_GT.copy()
@@ -228,10 +219,10 @@ def get_test_statistics(
         store_data_path: Optional[str] = None,
         save: bool = False,
         log: Optional[str] = None,
-) -> DataFrame:
+    ) -> DataFrame:
     """
-     This function computes for each indicated scoring method the performance of the scores. It applies a two sample
-     test based on the passed method. It can store the data in a desired folder.
+    This function computes for each indicated scoring method the performance of the scores. It applies a two sample test based on the passed method. It can store the data in a desired folder.
+
     Args:
         adata: AnnData object containing the preprocessed (log-normalized) gene expression data.
         scoring_names: Column names of signature scores in '.obs' attribute.
@@ -248,6 +239,11 @@ def get_test_statistics(
         A dataframe containing the test results for all names in scoring_names. It contains the following columns
         [Scoring method', 'Test method', 'Statistic', 'pvalue'].
 
+    Raises:
+        ValueError
+            1. If label_col is not available in adata.obs.
+            2. If label_whsc os not a category in label_col.
+            3. If label_col contains not two categories.
     """
     if log is None:
         log = logging
@@ -267,7 +263,7 @@ def get_test_statistics(
         )
     if label_whsc not in adata.obs[label_col].cat.categories:
         raise ValueError(
-            f"Indicated label for cells with higher scores {label_whsc} is not a categorie of adata.obs["
+            f"Indicated label for cells with higher scores {label_whsc} is not a category of adata.obs["
             f"label_col]. Available categories {adata.obs[label_col].cat.categories.tolist()}"
         )
     if len(adata.obs[label_col].cat.categories) != 2:
@@ -372,3 +368,4 @@ def get_test_statistics(
         log.info(f"Stored test statistic to {tests_scores_fn}")
 
     return df
+

@@ -1,14 +1,14 @@
 import logging
 import os
 import warnings
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
 import scanpy as sc
 from anndata import AnnData
 from matplotlib import pyplot as plt
-from pandas import DataFrame
+from pandas import DataFrame, Series
 from scanpy.preprocessing._utils import _get_mean_var
 from scanpy.tools._score_genes import _sparse_nanmean
 from scipy.sparse import issparse
@@ -16,10 +16,10 @@ from sklearn.metrics import r2_score
 from skmisc.loess import loess
 
 
-def check_signature_genes(var_names: List[str], gene_list: List[str], return_type: Any = list):
+def check_signature_genes(var_names: List[str], gene_list: List[str], return_type: Any = list) -> List[str]:
     """
-    The method checks the availability of signature genes in the list of available genes (var_names). Genes not present
-    in var_names are expluded.
+    The method checks the availability of signature genes in the list of available genes (var_names). Genes not present in var_names are excluded.
+
     Args:
         var_names: List of available genes in the dataset.
         gene_list: List of genes to score for (signature).
@@ -68,10 +68,14 @@ def check_signature_genes(var_names: List[str], gene_list: List[str], return_typ
 def checks_ctrl_size(ctrl_size: int, gene_pool_size: int, gene_list_size: int):
     """
     Applies input checks on the control set size and if valid control sets can be built with the desired size.
+
     Args:
         ctrl_size: The number of control genes selected for each gene in the gene_list.
         gene_pool_size: The number of genes in the allowed control genes pool.
         gene_list_size: The number of genes in of a gene expression signature.
+
+    Returns:
+      None
 
     Raise:
         Value Error if checks on ctrl size fail.
@@ -86,9 +90,10 @@ def checks_ctrl_size(ctrl_size: int, gene_pool_size: int, gene_list_size: int):
                          f'scoring control sets. Decrease ctrl_size and/or siganture length and/or gene pool.')
 
 
-def get_bins_wrt_avg_gene_expression(gene_means: Any, n_bins: int, verbose: int = 0):
+def get_bins_wrt_avg_gene_expression(gene_means: Any, n_bins: int, verbose: int = 0) -> Series:
     """
     Method to compute the average gene expression bins.
+
     Args:
         gene_means: Average gene expression vector.
         n_bins: Number of desired bins.
@@ -106,16 +111,24 @@ def get_bins_wrt_avg_gene_expression(gene_means: Any, n_bins: int, verbose: int 
 
 
 def get_data_for_gene_pool(adata: AnnData, gene_pool: List[str], gene_list: List[str], ctrl_size: Optional[int] = None,
-                           check_gene_list: bool = True):
+                           check_gene_list: bool = True) -> Tuple[AnnData, List[str]]:
     """
     The method to filter dataset for gene pool and genes in gene_list.
+
     Args:
         adata: AnnData object containing the preprocessed (log-normalized) gene expression data.
         gene_pool: List of genes from which the control genes can be selected.
         gene_list: List of genes (signature) scoring methods want to score for.
         check_gene_list: Indicates whether gene list should be checked.
+
     Returns:
         Eventually, filtered adata subset and new gene_pool.
+
+    Raises:
+        ValueError
+            1. If the variable gene_pool does not have the correct type.
+            2. If no valid genes were passed as reference set.
+            3. If there are note enough genes in gene_pool (len(gene_pool) - len(gene_list) < ctrl_size) to compute scoring control sets.
     """
     var_names = list(adata.var_names)
     if gene_pool is not None and type(gene_pool) not in [list, set]:
@@ -166,6 +179,7 @@ def get_gene_list_real_data(
     This function returns the signature genes for a given dataset. It first gets all differentially expressed genes for
     a group of interest and then selects a signature based on the defined mode.
     mode).
+
     Args:
         adata: AnnData object containing the preprocessed (log-normalized) gene expression data.
         dge_method: Method for DGEX in Scanpy. Available methods: 'logreg', 't-test', 'wilcoxon', 't-test_overestim_var'
@@ -184,6 +198,9 @@ def get_gene_list_real_data(
     Returns:
         Gene expression signature, i.e., list of genes.
 
+    Raises:
+        ValueError
+            If mode is not in ["most_diff_expressed", "least_diff_expressed", "random"] or label_col is not in adata.obs.
     """
     adata = adata.copy() if copy else adata
 
@@ -237,13 +254,12 @@ def get_least_variable_genes_per_bin_v1(
     """
     This method implements v1 of the least variable control genes selection for a given dataset. The method uses
     provided expression bins to select from each bin the genes with the smallest dispersion.
+
     Args:
         adata: AnnData object containing the preprocessed (log-normalized) gene expression data.
         cuts: Assignment of genes to expression bins.
         ctrl_size: The number of control genes selected for each expression bin.
-        method: Indicates which method should be used to compute the least variable genes. We can use
-            'seurat' or 'cell_ranger'. See reference
-            https://scanpy.readthedocs.io/en/latest/generated/scanpy.pp.highly_variable_genes.html#scanpy-pp-highly-variable-genes
+        method: Indicates which method should be used to compute the least variable genes. We can use 'seurat' or 'cell_ranger'. See reference https://scanpy.readthedocs.io/en/latest/generated/scanpy.pp.highly_variable_genes.html#scanpy-pp-highly-variable-genes
         gene_pool: The pool of genes out of which control genes can be selected.
 
     Returns:
@@ -276,8 +292,8 @@ def get_least_variable_genes_per_bin_v1(
     for cut in np.unique(cuts_subset):
         r_genes_current_bin = (
             adata_subset.var["dispersions"][cuts_subset == cut]
-            .nsmallest(ctrl_size)
-            .index
+                .nsmallest(ctrl_size)
+                .index
         )
         r_genes_current_bin = r_genes_current_bin.tolist()
         lvg_per_bin[cut] = r_genes_current_bin
@@ -294,18 +310,21 @@ def get_least_variable_genes_per_bin_v2(
     each of the expression bins the least variable genes, during which the average expression of the expression bins are
     binned a second time and normalized dispersion scores are computed. The method then selects for each expression bin
     the genes with smallest normalized dispersion.
+
     Args:
         adata: AnnData object containing the preprocessed (log-normalized) gene expression data.
         cuts: Assignment of genes to expression bins.
         ctrl_size: The number of control genes selected for each expression bin.
-        method: Indicates which method should be used to compute the least variable genes. We can use
-            'seurat' or 'cell_ranger'. See reference
-            https://scanpy.readthedocs.io/en/latest/generated/scanpy.pp.highly_variable_genes.html#scanpy-pp-highly-variable-genes
+        method: Indicates which method should be used to compute the least variable genes. We can use 'seurat' or 'cell_ranger'. See reference https://scanpy.readthedocs.io/en/latest/generated/scanpy.pp.highly_variable_genes.html#scanpy-pp-highly-variable-genes
         gene_pool: The pool of genes out of which control genes can be selected.
         nr_norm_bins: The number of bins required for the highly variable genes computation for each expression bin.
 
     Returns:
         A dictionary mapping to each expression bin (i.e., distinct values in cuts) a set of genes with least variation.
+
+    Raises:
+        ValueError
+            If method is not in ["seurat", "cell_ranger"]
     """
     gene_pool = (
         adata.var_names
@@ -349,20 +368,19 @@ def get_mean_and_variance_gene_expression(adata: AnnData,
     This function computes for the passed data the average gene expression and the variance of genes. Additionally, one
     can compute the estimated variance and standard deviation by regression the mean out. The estimation of the variance
     is computed by fitting a loess curve on the log10 mean and log10 variance.
+
     Args:
         adata: AnnData object containing the preprocessed (log-normalized) gene expression data.
         estim_var: Indicates whether to compute the estimated variance or not
         loess_span: Span parameter of loess see https://has2k1.github.io/scikit-misc/stable/generated/skmisc.loess.loess.html
         loess_degree: Span parameter of loess see https://has2k1.github.io/scikit-misc/stable/generated/skmisc.loess.loess.html
         show_plots: Indicates whether to show the plot or not.
-        store_path: Path where to store the computed data and the plots. If the path does not exist, no data or plots
-            are stored.
+        store_path: Path where to store the computed data and the plots. If the path does not exist, no data or plots are stored.
         store_data_prefix: Indicates a prefix to the data/ plot file names.
 
     Returns:
         Dataframe containing the average gene expression and the variance of each gene. If estim_var=True, it
-        additionally contains the estimated variance and standard variation of each gene and the loess r2-score
-        (in data.attrs).
+        additionally contains the estimated variance and standard variation of each gene and the loess r2-score (in data.attrs).
     """
 
     store_data = True
@@ -372,7 +390,7 @@ def get_mean_and_variance_gene_expression(adata: AnnData,
             warnings.warn(f'The passed store path {store_path} does not exists. Data won\'t be stored.')
     else:
         store_data = False
-        #print('No store_path indicated, thus no data stored.')
+        # print('No store_path indicated, thus no data stored.')
 
     X = adata.X
     df = pd.DataFrame()
@@ -425,10 +443,10 @@ def get_mean_and_variance_gene_expression(adata: AnnData,
     return df
 
 
-def nanmean(x: Any, axis: int, dtype=None):
+def nanmean(x: Any, axis: int, dtype=None) -> float:
     """
-    Sparse equivalent to numpy.nanmean using the sparse nanmean implementation of Scanpy
-    https://github.com/scverse/scanpy/blob/034ca2823804645e0d4874c9b16ba2eb8c13ac0f/scanpy/tools/_score_genes.py
+    Sparse equivalent to numpy.nanmean using the sparse nanmean implementation of Scanpy https://github.com/scverse/scanpy/blob/034ca2823804645e0d4874c9b16ba2eb8c13ac0f/scanpy/tools/_score_genes.py
+
     Args:
         x: Data matrix.
         axis: Axis along which to compute mean (0: column-wise, 1: row-wise).
@@ -436,7 +454,6 @@ def nanmean(x: Any, axis: int, dtype=None):
 
     Returns:
         Mean vector of desired dimension
-
     """
     if issparse(x):
         x_mean = np.array(_sparse_nanmean(x, axis=axis)).flatten()
@@ -452,6 +469,7 @@ def nanmean(x: Any, axis: int, dtype=None):
 def nextnonexistent(f: str) -> str:
     """
     Method to get next filename if original filename does already exist.
+
     Args:
         f: Filename.
 
@@ -467,13 +485,18 @@ def nextnonexistent(f: str) -> str:
     return fnew
 
 
-# Following two methods are contributed by Rachit Belwariar.
-# https://www.geeksforgeeks.org/longest-common-prefix-using-divide-and-conquer-algorithm/?ref=lbp
-# A Python3 Program to find the longest common prefix
-
-# A Utility Function to find the common
-# prefix between strings- str1 and str2
 def commonPrefixUtil(str1, str2):
+    """
+    Utility Function to find the common prefix between strings str1 and str2.
+    The method was implemented by  Rachit Belwariar. https://www.geeksforgeeks.org/longest-common-prefix-using-divide-and-conquer-algorithm/?ref=lbp
+
+    Args:
+        str1: First string
+        str2: Second string
+
+    Returns:
+        Common prefix of the two strings
+    """
     result = ""
     n1, n2 = len(str1), len(str2)
     i, j = 0, 0
@@ -488,10 +511,19 @@ def commonPrefixUtil(str1, str2):
     return result
 
 
-# A Divide and Conquer based function to
-# find the longest common prefix. This is
-# similar to the merge sort technique
 def commonPrefix(arr, low, high):
+    """
+    A Divide and Conquer based function to find the longest common prefix. This is similar to the merge sort technique.
+    The method was implemented by  Rachit Belwariar. https://www.geeksforgeeks.org/longest-common-prefix-using-divide-and-conquer-algorithm/?ref=lbp
+
+    Args:
+        arr: Array of strings.
+        low: index of the lowest element in range
+        high: index of the highest element in range
+
+    Returns:
+        Common prefix of all strings in arr
+    """
     if low == high:
         return arr[low]
 

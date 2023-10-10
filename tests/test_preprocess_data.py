@@ -1,10 +1,8 @@
-from unittest import TestCase
-
 import anndata
 import numpy as np
 import pytest
 
-from signaturescoring.data.preprocess_data import preprocess
+from tests.preprocess_data import preprocess
 
 
 @pytest.fixture
