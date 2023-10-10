@@ -14,6 +14,7 @@ import sys
 
 sys.path.append('../signaturescoring')
 sys.path.append('../tutorials')
+sys.path.append('..')
 #sys.path.insert(0, os.path.abspath("../tutorials"))
 #sys.path.insert(0, os.path.abspath("../signaturescoring"))
 
