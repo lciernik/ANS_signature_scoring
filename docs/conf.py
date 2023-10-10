@@ -16,7 +16,8 @@ import sys
 #sys.path.append('../tutorials')
 #sys.path.append('..')
 #sys.path.insert(0, os.path.abspath("../tutorials"))
-sys.path.insert(0, os.path.abspath("../signaturescoring"))
+#sys.path.insert(0, os.path.abspath("../signaturescoring"))
+sys.path.insert(0, os.path.abspath(".."))
 
 
 # -- Project information -----------------------------------------------------
