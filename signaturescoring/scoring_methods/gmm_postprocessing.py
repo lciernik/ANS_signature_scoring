@@ -3,8 +3,8 @@ from typing import List, Optional, Union
 
 import numpy as np
 import pandas as pd
-import scipy
 import scanpy as sc
+import scipy
 from anndata import AnnData
 from matplotlib import pyplot as plt
 from pandas import DataFrame
@@ -134,11 +134,11 @@ class GMMPostprocessor:
                 sc.logging.info(f'{corr}, {sco}, {group}')
                 if plot:
                     ax[k, l].scatter(adata.obs[sco], adata.obs[group])
-                    x_label = sco.split('_')[-1]
-                    y_label = '_'.join(group.split('_')[-3:])
+                    x_label = sco
+                    y_label = group
                     ax[k, l].set_xlabel(x_label)
                     ax[k, l].set_ylabel(y_label)
-                    ax[k, l].set_title(f'corr({x_label}, {y_label})=\n{corr}')
+                    ax[k, l].set_title(f'corr({x_label}, {y_label})=\n({corr[0]:4f}, {corr[1]:4f})')
                 # if corr[1] < 0.01 and corr[0] > max_corr:
                 if corr[0] > max_corr:
                     max_corr = corr[0]
