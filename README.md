@@ -1,10 +1,10 @@
 [![docs-deploy](https://github.com/lciernik/ANS_signature_scoring/actions/workflows/docs-deploy.yml/badge.svg)](https://github.com/lciernik/ANS_signature_scoring/actions/workflows/docs-deploy.yml)
 
-# ANS: Adjusted Neighborhood Scoring to  improve assessment of gene signatures in single-cell RNA-seq data
+# ANS: Adjusted Neighborhood Scoring to improve gene signature-based cell annotation in single-cell RNA-seq data
 A gene expression signature scoring Python package.  
 
-This repository accompanies the work: Laure Ciernik, Agnieszka Kraft, Joséphine Yates, Florian Barkmann, and 
-Valentina Boeva, “ANS: Adjusted Neighborhood Scoring to  improve assessment of gene signatures in single-cell RNA-seq data”. doi: [https://doi.org/10.1101/2023.09.20.558114](https://doi.org/10.1101/2023.09.20.558114)
+This repository accompanies the work: Laure Ciernik*, Agnieszka Kraft*, Joséphine Yates, Florian Barkmann, and 
+Valentina Boeva, “ANS: Adjusted Neighborhood Scoring to improve gene signature-based cell annotation in single-cell RNA-seq data”. doi: [https://doi.org/10.1101/2023.09.20.558114](https://doi.org/10.1101/2023.09.20.558114)
 
 *Note: This repository is in the experimental stage. Changes to the API may appear.*
 
@@ -24,17 +24,17 @@ pip install git+https://github.com/lciernik/ANS_signature_scoring.git
 
 #### Method implementation in R 
 The repository contains an R implementation of the novel scoring method in the folder 
-`src_R/adjusted_neighborhood_scoring.R`. The file can be downloaded, and the methods can be loaded for usage. 
+`src_R/adjusted_neighborhood_scoring.R`. The file can be downloaded, and the methods can be loaded for use. 
 
 *Disclaimer*: The code is largely based on the implementation of the [`AddModuleScore`](https://satijalab.org/seurat/reference/addmodulescore) 
 method of [the Seurat package](https://satijalab.org/seurat/index.html). 
 
-Note: ANS for R should be used on Seurat objetcts. Source the file in your scripte and use it identically to [`AddModuleScore`](https://satijalab.org/seurat/reference/addmodulescore). 
+Note: ANS for R should be used on Seurat objects. Source the file in your script and use it identically to [`AddModuleScore`](https://satijalab.org/seurat/reference/addmodulescore). 
 
 
 ## Getting started
 The package allows full compatibility with the Python scRNA-seq analysis toolbox [Scanpy](https://scanpy.readthedocs.io/en/stable/index.html).
-The scoring methods are applied on preprocessed (log-normalized) scRNA-seq. 
+The scoring methods are applied to preprocessed (log-normalized) scRNA-seq. 
 ```python
 import signaturescoring as ssc
 
@@ -53,7 +53,7 @@ Other `method` values:
 - `jasmine_scoring`: Python implementation of [JASMINE](https://github.com/NNoureen/JASMINE) by [Noureen et al. 2022](https://doi.org/10.7554/eLife.71994). Requires an additional argument `score_method` with the values `likelihood` or `oddsratio`. 
 - `ucell_scoring`: Python implementation of [UCell](https://github.com/carmonalab/UCell) by [Andreatta et Carmona 2021](https://doi.org/10.1016/j.csbj.2021.06.043). 
 
-See tutorials on basic scoring examples,  GMM postprocessing and hard labeling in the `tutorials` folder. 
+See tutorials on basic scoring examples,  GMM postprocessing, and hard labeling in the `tutorials` folder. 
 
 ## Correspondance 
 First: [Laure Ciernik](mailto:laure.ciernik@gmail.com)
