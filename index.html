@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -367,7 +367,7 @@ document.write(`
 <section id="basic-usage-in-python">
 <h3>Basic usage in Python<a class="headerlink" href="#basic-usage-in-python" title="Permalink to this heading">#</a></h3>
 <p>The package allows full compatibility with the Python scRNA-seq analysis toolbox <a class="reference external" href="https://scanpy.readthedocs.io">Scanpy</a>. The scoring methods are applied on preprocessed (log-normalized) scRNA-seq.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">signaturescoring</span> <span class="k">as</span> <span class="nn">ssc</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">signaturescoring</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ssc</span>
 
 <span class="n">ssc</span><span class="o">.</span><span class="n">score_signature</span><span class="p">(</span>
     <span class="n">adata</span><span class="o">=</span><span class="n">adata</span><span class="p">,</span>                            <span class="c1"># preprocessed (log-normalized) gene expression data in an AnnData object</span>

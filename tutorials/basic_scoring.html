@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
   
@@ -381,7 +381,23 @@ document.write(`
 <section id="Content-tutorial">
 <h2>Content tutorial<a class="headerlink" href="#Content-tutorial" title="Permalink to this heading">#</a></h2>
 <p>In this tutorial we show the <strong>usage of each available gene signature scoring methods in this package</strong> and their arguments.</p>
-<p>Structure: * Load preprocessed data * Load cell state specific signatures * Score cell state specific signatures * Adjusted Neighborhood Scoring (ANS) * Scanpy Scoring * Seurat Scoring * Seurat_AG Scoring * Seurat_LVG Scoring * JASMINE Scoring * UCell Scoring * Visualizations</p>
+<p>Structure:</p>
+<ul class="simple">
+<li><p>Load preprocessed data</p></li>
+<li><p>Load cell state specific signatures</p></li>
+<li><p>Score cell state specific signatures</p>
+<ul>
+<li><p>Adjusted Neighborhood Scoring (ANS)</p></li>
+<li><p>Scanpy Scoring</p></li>
+<li><p>Seurat Scoring</p></li>
+<li><p>Seurat_AG Scoring</p></li>
+<li><p>Seurat_LVG Scoring</p></li>
+<li><p>JASMINE Scoring</p></li>
+<li><p>UCell Scoring</p></li>
+</ul>
+</li>
+<li><p>Visualizations</p></li>
+</ul>
 <section id="Data">
 <h3>Data<a class="headerlink" href="#Data" title="Permalink to this heading">#</a></h3>
 <p>We used our preprocessed version of the PBMC dataset and the DGEX list published by Hao et al. 2021 [5]. We will use the preprocessed dataset containing B-cells, monocytes, and natural killer cells. The preprocessed dataset can be additionally downloaded manually <a class="reference external" href="https://drive.google.com/file/d/15DiWGfSoqtt6Fl2tK_0ik-w50rn30LQA/view?usp=drive_link">here</a> and the DGEX list <a class="reference external" href="https://drive.google.com/file/d/1a3Uqky2VZxCxLvGI-soCTUp3lijrfrx7/view?usp=drive_link">here</a>. The raw data can be
@@ -399,17 +415,17 @@ downloaded <a class="reference external" href="https://atlas.fredhutch.org/nygc/
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">gdown</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scanpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gdown</span>
 
-<span class="kn">from</span> <span class="nn">signaturescoring</span> <span class="kn">import</span> <span class="n">score_signature</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">signaturescoring</span><span class="w"> </span><span class="kn">import</span> <span class="n">score_signature</span>
 
-<span class="kn">from</span> <span class="nn">tut_helper</span> <span class="kn">import</span> <span class="n">get_sigs_from_DGEX_list</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tut_helper</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_sigs_from_DGEX_list</span>
 <span class="n">sc</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">=</span> <span class="mi">2</span>
 </pre></div>
 </div>
@@ -561,7 +577,7 @@ Signature for subtype NK contains 243 genes.
 <h2>Score cell state specific signatures<a class="headerlink" href="#Score-cell-state-specific-signatures" title="Permalink to this heading">#</a></h2>
 <p>Next we show how to score cells with each method and avaialble parameters. We will score all signatures in <code class="docutils literal notranslate"><span class="pre">SG_subtypes</span></code>.</p>
 <p>All scoring methods can be called via the method <code class="docutils literal notranslate"><span class="pre">score_signature</span></code> of our package:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">signaturescoring</span> <span class="k">as</span> <span class="nn">ssc</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">signaturescoring</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ssc</span>
 
 <span class="n">ssc</span><span class="o">.</span><span class="n">score_signature</span><span class="p">(</span>
     <span class="n">adata</span><span class="o">=</span><span class="n">adata</span><span class="p">,</span>
