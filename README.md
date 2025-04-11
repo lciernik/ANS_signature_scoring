@@ -1,4 +1,4 @@
-[![docs-deploy](https://github.com/lciernik/ANS_signature_scoring/actions/workflows/docs-deploy.yml/badge.svg)](https://github.com/lciernik/ANS_signature_scoring/actions/workflows/docs-deploy.yml)
+[![docs-deploy](https://github.com/BoevaLab/ANS_signature_scoring/actions/workflows/docs-deploy.yml/badge.svg)](https://github.com/BoevaLab/ANS_signature_scoring/blob/main/.github/workflows/docs-deploy.yml)
 
 # ANS: Adjusted Neighborhood Scoring to improve gene signature-based cell annotation in single-cell RNA-seq data
 A gene expression signature scoring Python package.  
@@ -10,7 +10,7 @@ Valentina Boeva, “ANS: Adjusted Neighborhood Scoring to improve gene signature
 
 ## Resources
 
-For tutorials and API description, see our [documentation](https://lciernik.github.io/ANS_signature_scoring).
+For tutorials and API description, see our [documentation](https://boevalab.github.io/ANS_signature_scoring/).
 
 ## Installation 
 We aim for Python versions 3.8+. Run:
